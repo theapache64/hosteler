@@ -10,6 +10,37 @@
         <item name="buttonStyle">@style/customButton</item>
     </style>
 
+    <style name="CaldroidDefaultDark" parent="CaldroidDefault">
+        <item name="styleCaldroidLeftArrow">@style/CaldroidDefaultLeftButton</item>
+        <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
+        <item name="styleCaldroidMonthName">@style/CaldroidDefaultMonthName2</item>
+    </style>
+
+    <style name="CaldroidDefaultArrowButton">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+
+    <style name="CaldroidDefaultMonthName2" parent="CaldroidDefaultMonthName">
+        <item name="android:textColor">@color/grey_800</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@drawable/prev</item>
+    </style>
+
+    <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@drawable/next</item>
+    </style>
+
     <style name="customButton" parent="@style/Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
     </style>
