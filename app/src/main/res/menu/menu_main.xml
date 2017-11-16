@@ -2,9 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.theah64.hosteler.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:id="@+id/miPaymentHistory"
+        android:orderInCategory="1"
+        android:title="@string/Payment_History"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/miSettings"
+        android:orderInCategory="2"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
+
 </menu>
