@@ -6,8 +6,8 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 
-import com.theah64.retrokit.R;
-import com.theah64.retrokit.widgets.utils.CustomWidgetUtils;
+
+import com.theah64.hosteler.R;
 
 import java.util.regex.Pattern;
 

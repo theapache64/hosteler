@@ -9,4 +9,8 @@
     <string name="BOTH">BOTH</string>
     <string name="DONE">DONE</string>
     <string name="Additional_charge">Additional charge</string>
+    <string name="Empty">Can\'t be empty</string>
+    <string name="Description">Description</string>
+    <string name="ADD">ADD</string>
+    <string name="CANCEL">CANCEL</string>
 </resources>

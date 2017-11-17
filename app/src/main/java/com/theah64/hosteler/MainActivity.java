@@ -1,13 +1,17 @@
 package com.theah64.hosteler;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
@@ -16,6 +20,7 @@ import com.roomorama.caldroid.CaldroidListener;
 import com.theah64.hosteler.database.FoodHistories;
 import com.theah64.hosteler.models.FoodHistory;
 import com.theah64.hosteler.utils.DateUtils;
+import com.theah64.hosteler.widgets.ValidTextInputLayout;
 
 import java.util.Date;
 
@@ -39,11 +44,58 @@ public class MainActivity extends BaseAppCompatActivity {
         caldroidFragment.setCaldroidListener(new CaldroidListener() {
 
             @Override
-            public void onLongClickDate(Date date, View view) {
+            public void onLongClickDate(final Date date, View view) {
                 //Ask additional charge and it's description
+
+                @SuppressLint("InflateParams") final View adChargeLayout = inflater.inflate(R.layout.additional_charge_layout, null, false);
+                final ValidTextInputLayout vtilAdditionalCharge = adChargeLayout.findViewById(R.id.vtilAdditionalCharge);
+                final ValidTextInputLayout vtilDescription = (ValidTextInputLayout) adChargeLayout.findViewById(R.id.vtilDescription);
+
+                //checking if there's data available
+                final String sDate = DateUtils.formatWithddMMyyyy(date);
+                final FoodHistory[] foodHistory = {foodHistories.get(FoodHistories.COLUMN_DATE, sDate)};
+
+                if (foodHistory[0] != null) {
+                    vtilAdditionalCharge.setText(String.valueOf(foodHistory[0].getAdditionalCharge()));
+                    vtilDescription.setText(foodHistory[0].getDescription());
+                }
+
                 new MaterialDialog.Builder(MainActivity.this)
-                        .title(R.string.Additional_charge)
-                        .customView()
+                        .title(DateUtils.getReadableDateFormat(date))
+                        .customView(adChargeLayout, true)
+                        .positiveText(R.string.ADD)
+                        .autoDismiss(false)
+                        .onAny(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (which == DialogAction.POSITIVE) {
+
+                                    if (!vtilAdditionalCharge.isMatch()) {
+                                        return;
+                                    }
+
+                                    //Submit additional charge here
+                                    final int additionalCharge = Integer.parseInt(vtilAdditionalCharge.getString());
+                                    final String c = vtilDescription.getString();
+
+
+                                    if (foodHistory[0] == null) {
+                                        foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null);
+                                        foodHistories.add(foodHistory[0]);
+                                    } else {
+                                        foodHistory[0].setAdditionalCharge(additionalCharge);
+                                        foodHistory[0].setDescription(vtilDescription.getString());
+                                        foodHistories.update(foodHistory[0]);
+                                    }
+
+                                    updatePrice();
+
+                                    dialog.dismiss();
+                                }
+                            }
+                        })
+                        .build()
+                        .show();
             }
 
             @Override
@@ -79,6 +131,10 @@ public class MainActivity extends BaseAppCompatActivity {
         t.replace(R.id.flCalendar, caldroidFragment);
         t.commit();
 
+    }
+
+    private void updatePrice() {
+        //TODO: Update total price here
     }
 
     @Override

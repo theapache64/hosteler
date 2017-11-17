@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="iconLeft" format="string" />
+    <attr name="iconLeftColor" format="color" />
+    <attr name="iconLeftSize" format="dimension" />
+    <attr name="iconLeftPadding" format="dimension" />
+
+    <declare-styleable name="CustomEditText">
+        <attr name="iconLeft" />
+        <attr name="iconLeftColor" />
+        <attr name="iconLeftSize" />
+        <attr name="iconLeftPadding" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTextView">
+        <attr name="iconLeft" />
+        <attr name="iconLeftColor" />
+        <attr name="iconLeftSize" />
+        <attr name="iconLeftPadding" />
+        <attr name="isStrikeThrough" format="boolean" />
+    </declare-styleable>
+
+</resources>

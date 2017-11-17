@@ -5,8 +5,15 @@ package com.theah64.hosteler.models;
  */
 public class FoodHistory {
 
-    private final String id, date, description, createdAt;
-    private final int breakfast, dinner, guestBreakfast, guestDinner, additionalCharge;
+    private final String id;
+    private final String date;
+    private String description;
+    private final String createdAt;
+    private final int breakfast;
+    private final int dinner;
+    private final int guestBreakfast;
+    private final int guestDinner;
+    private int additionalCharge;
 
     public FoodHistory(String id, String date, String description, int breakfast, int dinner, int guestBreakfast, int guestDinner, int additionalCharge, String createdAt) {
         this.id = id;
@@ -69,5 +76,13 @@ public class FoodHistory {
                 ", additionalCharge=" + additionalCharge +
                 ", createdAt=" + createdAt +
                 '}';
+    }
+
+    public void setAdditionalCharge(int additionalCharge) {
+        this.additionalCharge = additionalCharge;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
