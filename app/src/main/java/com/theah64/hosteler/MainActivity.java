@@ -3,6 +3,7 @@ package com.theah64.hosteler;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,12 +30,22 @@ public class MainActivity extends BaseAppCompatActivity {
         setSupportActionBar(toolbar);
 
         final FoodHistories foodHistories = FoodHistories.getInstance(this);
+        final LayoutInflater inflater = LayoutInflater.from(this);
 
         final CaldroidFragment caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
         args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
         caldroidFragment.setArguments(args);
         caldroidFragment.setCaldroidListener(new CaldroidListener() {
+
+            @Override
+            public void onLongClickDate(Date date, View view) {
+                //Ask additional charge and it's description
+                new MaterialDialog.Builder(MainActivity.this)
+                        .title(R.string.Additional_charge)
+                        .customView()
+            }
+
             @Override
             public void onSelectDate(Date date, View view) {
 
