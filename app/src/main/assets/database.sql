@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS food_histories;
 
-CREATE TABLE food_history(
+CREATE TABLE food_histories(
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	_date TEXT NOT NULL,
 	breakfast INTEGER NOT NULL,
