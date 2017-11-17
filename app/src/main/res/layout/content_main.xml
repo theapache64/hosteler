@@ -26,18 +26,50 @@
             android:padding="8dp">
 
             <!--Hints-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:weightSum="100">
 
                 <!--Breakfast only-->
                 <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:drawableLeft="@drawable/breakfast_only"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/breakfast_only"
+                    android:text="@string/BF" />
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:drawableLeft="@drawable/dinner_only"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/dinner_only"
+                    android:text="@string/DN" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:drawableLeft="@drawable/both"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/both"
+                    android:text="@string/BOTH" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:drawableLeft="@drawable/complex"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/complex"
+                    android:text="@string/BOTH" />
 
             </LinearLayout>
 

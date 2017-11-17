@@ -2,23 +2,24 @@ package com.theah64.hosteler;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+import com.theah64.hosteler.database.FoodHistories;
+import com.theah64.hosteler.models.FoodHistory;
+import com.theah64.hosteler.utils.DateUtils;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends BaseAppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +28,45 @@ public class MainActivity extends BaseAppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final FoodHistories foodHistories = FoodHistories.getInstance(this);
 
         final CaldroidFragment caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
         args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
         caldroidFragment.setArguments(args);
+        caldroidFragment.setCaldroidListener(new CaldroidListener() {
+            @Override
+            public void onSelectDate(Date date, View view) {
+
+                final String clickedDate = DateUtils.formatWithddMMyyyy(date);
+                final FoodHistory foodHistory = foodHistories.get(FoodHistories.COLUMN_DATE, clickedDate);
+
+                new MaterialDialog.Builder(MainActivity.this)
+                        .title(DateUtils.getReadableDateFormat(date))
+                        .items(R.array.food_types)
+                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                                /**
+                                 * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
+                                 * returning false here won't allow the newly selected check box to actually be selected
+                                 * (or the newly unselected check box to be unchecked).
+                                 * See the limited multi choice dialog example in the sample project for details.
+                                 **/
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.DONE)
+                        .show();
+
+                System.out.println(foodHistory);
+
+            }
+        });
 
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.flCalendar, caldroidFragment);
         t.commit();
-
 
     }
 

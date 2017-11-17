@@ -4,4 +4,8 @@
     <string name="PAYMENT_TIME">PAYMENT TIME</string>
     <string name="Payment_History">Payment History</string>
     <string name="From_last_payment">From last payment</string>
+    <string name="BF">BF</string>
+    <string name="DN">DN</string>
+    <string name="BOTH">BOTH</string>
+    <string name="DONE">DONE</string>
 </resources>

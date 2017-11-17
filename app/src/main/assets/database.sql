@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS food_histories;
+
 CREATE TABLE food_history(
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	_date TEXT NOT NULL,
@@ -7,6 +8,7 @@ CREATE TABLE food_history(
 	guest_breakfast INTEGER NOT NULL ,
     guest_dinner INTEGER NOT NULL ,
     additional_charge INTEGER NOT NULL,
+    description TEXT NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	UNIQUE (_date)
 );
