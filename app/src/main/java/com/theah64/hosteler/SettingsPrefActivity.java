@@ -36,7 +36,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_main);
 
-            // gallery EditText change listener
+            /*// gallery EditText change listener
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_gallery_name)));
 
             // notification preference change listener
@@ -49,7 +49,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
                     sendFeedback(getActivity());
                     return true;
                 }
-            });
+            });*/
         }
     }
 
@@ -80,7 +80,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
             String stringValue = newValue.toString();
 
             if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
+                /*// For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);
@@ -89,9 +89,9 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
                 preference.setSummary(
                         index >= 0
                                 ? listPreference.getEntries()[index]
-                                : null);
+                                : null);*/
 
-            } else if (preference instanceof RingtonePreference) {
+            }/* else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
                 // using RingtoneManager.
                 if (TextUtils.isEmpty(stringValue)) {
@@ -120,7 +120,7 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
                 }
             } else {
                 preference.setSummary(stringValue);
-            }
+            }*/
             return true;
         }
     };
