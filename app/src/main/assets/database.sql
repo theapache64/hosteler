@@ -8,7 +8,7 @@ CREATE TABLE food_histories(
 	guest_breakfast INTEGER NOT NULL ,
     guest_dinner INTEGER NOT NULL ,
     additional_charge INTEGER NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	UNIQUE (_date)
 );

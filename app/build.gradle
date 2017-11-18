@@ -25,7 +25,7 @@ dependencies {
     implementation 'com.android.support:design:26.0.1'
     compile 'com.roomorama:caldroid:3.0.1'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2' // (v4.5)
-    //compile 'com.theah64.materialcolors:materialcolors:1.0.0'
+    compile 'com.theah64.materialcolors:materialcolors:1.0.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

@@ -1,5 +1,6 @@
 package com.theah64.hosteler.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -52,7 +53,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
                 COLUMN_GUEST_DINNER,
                 COLUMN_ADDITIONAL_CHARGE,
                 COLUMN_CREATED_AT
-        }, column + " = ?", new String[]{}, null, null, null, null);
+        }, column + " = ?", new String[]{value}, null, null, null, null);
 
 
         if (cursor.moveToFirst()) {
@@ -72,5 +73,33 @@ public class FoodHistories extends BaseTable<FoodHistory> {
         }
 
         return foodHistory;
+    }
+
+    @Override
+    public long add(FoodHistory foodHistory) {
+        final ContentValues cv = new ContentValues();
+        cv.put(COLUMN_DATE, foodHistory.getDate());
+        cv.put(COLUMN_DESCRIPTION, foodHistory.getDescription());
+        cv.put(COLUMN_BREAKFAST, foodHistory.getBreakfast());
+        cv.put(COLUMN_DINNER, foodHistory.getDinner());
+        cv.put(COLUMN_GUEST_BREAKFAST, foodHistory.getGuestBreakfast());
+        cv.put(COLUMN_GUEST_DINNER, foodHistory.getGuestDinner());
+        cv.put(COLUMN_ADDITIONAL_CHARGE, foodHistory.getAdditionalCharge());
+
+        return this.getWritableDatabase().insert(getTableName(), null, cv);
+    }
+
+    @Override
+    public boolean update(FoodHistory foodHistory) {
+
+        final ContentValues cv = new ContentValues();
+        cv.put(COLUMN_DESCRIPTION, foodHistory.getDescription());
+        cv.put(COLUMN_BREAKFAST, foodHistory.getBreakfast());
+        cv.put(COLUMN_DINNER, foodHistory.getDinner());
+        cv.put(COLUMN_GUEST_BREAKFAST, foodHistory.getGuestBreakfast());
+        cv.put(COLUMN_GUEST_DINNER, foodHistory.getGuestDinner());
+        cv.put(COLUMN_ADDITIONAL_CHARGE, foodHistory.getAdditionalCharge());
+
+        return this.getWritableDatabase().update(getTableName(), cv, COLUMN_DATE + " = ?", new String[]{foodHistory.getDate()}) > 0;
     }
 }

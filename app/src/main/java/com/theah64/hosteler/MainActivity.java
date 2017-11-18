@@ -40,6 +40,8 @@ public class MainActivity extends BaseAppCompatActivity {
         final CaldroidFragment caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
         args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+        caldroidFragment.setMaxDate(new Date());
+
         caldroidFragment.setArguments(args);
         caldroidFragment.setCaldroidListener(new CaldroidListener() {
 
@@ -88,8 +90,8 @@ public class MainActivity extends BaseAppCompatActivity {
                                         foodHistories.update(foodHistory[0]);
                                     }
 
-                                    updatePrice();
 
+                                    updatePrice();
                                     dialog.dismiss();
                                 }
                             }
@@ -104,10 +106,29 @@ public class MainActivity extends BaseAppCompatActivity {
                 final String clickedDate = DateUtils.formatWithddMMyyyy(date);
                 final FoodHistory foodHistory = foodHistories.get(FoodHistories.COLUMN_DATE, clickedDate);
 
+                final Integer[] selectedIndices = new Integer[]{};
+                if (foodHistory != null) {
+                    if (foodHistory.getBreakfast() > 0) {
+                        selectedIndices[0] = 0;
+                    }
+
+                    if (foodHistory.getDinner() > 0) {
+                        selectedIndices[1] = 1;
+                    }
+
+                    if (foodHistory.getGuestBreakfast() > 0) {
+                        selectedIndices[2] = 2;
+                    }
+
+                    if (foodHistory.getGuestDinner() > 0) {
+                        selectedIndices[3] = 3;
+                    }
+                }
+
                 new MaterialDialog.Builder(MainActivity.this)
                         .title(DateUtils.getReadableDateFormat(date))
                         .items(R.array.food_types)
-                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                        .itemsCallbackMultiChoice(selectedIndices, new MaterialDialog.ListCallbackMultiChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
                                 /**
@@ -116,10 +137,28 @@ public class MainActivity extends BaseAppCompatActivity {
                                  * (or the newly unselected check box to be unchecked).
                                  * See the limited multi choice dialog example in the sample project for details.
                                  **/
+
                                 return true;
                             }
                         })
                         .positiveText(R.string.DONE)
+                        .onAny(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (which == DialogAction.POSITIVE) {
+
+                                    if (dialog.getSelectedIndices() != null) {
+
+                                        for (final Integer selectedIndex : dialog.getSelectedIndices()) {
+                                            if (selectedIndex == 0) {
+                                                //foodHistory.setBreakfast();
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        })
                         .show();
 
                 System.out.println(foodHistory);

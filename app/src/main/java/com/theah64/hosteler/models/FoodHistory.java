@@ -9,10 +9,10 @@ public class FoodHistory {
     private final String date;
     private String description;
     private final String createdAt;
-    private final int breakfast;
-    private final int dinner;
-    private final int guestBreakfast;
-    private final int guestDinner;
+    private int breakfast;
+    private int dinner;
+    private int guestBreakfast;
+    private int guestDinner;
     private int additionalCharge;
 
     public FoodHistory(String id, String date, String description, int breakfast, int dinner, int guestBreakfast, int guestDinner, int additionalCharge, String createdAt) {
@@ -57,6 +57,22 @@ public class FoodHistory {
 
     public int getAdditionalCharge() {
         return additionalCharge;
+    }
+
+    public void setBreakfast(int breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public void setDinner(int dinner) {
+        this.dinner = dinner;
+    }
+
+    public void setGuestBreakfast(int guestBreakfast) {
+        this.guestBreakfast = guestBreakfast;
+    }
+
+    public void setGuestDinner(int guestDinner) {
+        this.guestDinner = guestDinner;
     }
 
     public String getCreatedAt() {
