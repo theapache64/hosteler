@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.theah64.hosteler.activities.PaymentTimeActivity"
+    tools:showIn="@layout/activity_payment_time">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            fontPath="fonts/Lato-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/Bill"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            tools:ignore="MissingPrefix" />
+
+        <!--Breakfast-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Breakfast"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvBreakfastCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="x10"
+                android:textColor="@color/grey_400"
+                android:textSize="14sp" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvTotalBreakfastCost"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="45"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/addition"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+
+        </LinearLayout>
+
+
+        <!--Dinner-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Dinner"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvDinnerCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="x10"
+                android:textColor="@color/grey_400"
+                android:textSize="14sp" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvTotalDinnerCost"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="45"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/addition"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <!--Guest breakfast-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Guest_Breakfast"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvGuestBreakfastCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="x10"
+                android:textColor="@color/grey_400"
+                android:textSize="14sp" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvTotalGuestBreakfastCost"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="45"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/addition"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <!--Guest dinner-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Guest_Dinner"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvGuestDinnerCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="x10"
+                android:textColor="@color/grey_400"
+                android:textSize="14sp" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvTotalGuestDinnerCost"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="45"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/addition"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <!--Additional charges-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Additional_charge"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvTotalAdditionalCharge"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="55"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/addition"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+
+
+        <!--Pending amount-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Pending_Amount"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvPendingAmount"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="55"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/addition"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <!--Advance amount-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Advance_Amount"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvAdvanceAmount"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="55"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="end"
+                android:text="@string/minus"
+                android:textColor="@color/grey_400"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="8dp"
+            android:background="@color/grey_400" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/Grand_Total"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvGrandTotal"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="55"
+                android:gravity="end"
+                android:text="2000"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="8dp"
+            android:background="@color/grey_400" />
+
+
+        <TextView
+            fontPath="fonts/Lato-Bold.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/Payment"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            tools:ignore="MissingPrefix" />
+
+        <com.theah64.hosteler.widgets.ValidTextInputLayout
+            android:id="@+id/vtilPaymentAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <com.theah64.hosteler.widgets.CustomEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Enter_amount_here"
+                android:inputType="number" />
+        </com.theah64.hosteler.widgets.ValidTextInputLayout>
+
+        <Button
+            android:id="@+id/bPay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/PAY" />
+
+    </LinearLayout>
+
+</ScrollView>

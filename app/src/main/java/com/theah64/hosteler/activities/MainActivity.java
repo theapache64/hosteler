@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -53,7 +55,6 @@ public class MainActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,8 +99,10 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void showPrimaryChooser(Date date) {
+
         final String clickedDate = DateUtils.formatWithddMMyyyy(date);
         FoodHistory foodHistory = foodHistoriesTable.get(FoodHistories.COLUMN_DATE, clickedDate);
+
 
         final List<Integer> selectedIndices = new ArrayList<>();
 
@@ -150,7 +153,17 @@ public class MainActivity extends BaseAppCompatActivity {
                 .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
                         if (which == DialogAction.POSITIVE) {
+
+                            if (finalFoodHistory.isPaid()) {
+                                new MaterialDialog.Builder(MainActivity.this)
+                                        .title(R.string.Failed)
+                                        .content(R.string.You_cant_edit_paid_dates)
+                                        .build()
+                                        .show();
+                                return;
+                            }
 
                             if (dialog.getSelectedIndices() != null) {
 
@@ -293,7 +306,10 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void updatePrice() {
         final long totalUnPaidAmount = foodHistoriesTable.getTotalUnPaidAmount();
-        tvAmount.setText(String.valueOf(totalUnPaidAmount));
+        final long advanceAmount = pref.getLong(PaymentTimeActivity.KEY_ADVANCE_AMOUNT, 0);
+        final long pendingAmount = pref.getLong(PaymentTimeActivity.KEY_PENDING_AMOUNT, 0);
+        final long finalAmount = (totalUnPaidAmount + pendingAmount) - advanceAmount;
+        tvAmount.setText(String.valueOf(finalAmount));
     }
 
     @Override
@@ -328,7 +344,9 @@ public class MainActivity extends BaseAppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public int getInteger(@IntegerRes int id) {
-        return getResources().getInteger(id);
+    @OnClick(R.id.bPaymentTime)
+    public void onPaymentTimeClicked() {
+        PaymentTimeActivity.start(this);
     }
+
 }

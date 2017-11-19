@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.theah64.hosteler.models.Bill;
 import com.theah64.hosteler.models.FoodHistory;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
     @SuppressLint("StaticFieldLeak")
     private static FoodHistories instance;
+
 
     private FoodHistories(Context context) {
         super(context, "food_histories");
@@ -148,5 +150,10 @@ public class FoodHistories extends BaseTable<FoodHistory> {
         }
         cursor.close();
         return totalUnPaidAmount;
+    }
+
+    public Bill getBill() {
+        Bill bill = null;
+        return bill;
     }
 }

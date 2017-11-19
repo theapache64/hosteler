@@ -102,7 +102,7 @@
             android:id="@+id/bPaymentTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/PAYMENT_TIME" />
+            android:text="@string/Payment_Time" />
 
     </LinearLayout>
 

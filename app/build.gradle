@@ -24,6 +24,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.0.1'
     implementation 'com.android.support:design:26.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.roomorama:caldroid:3.0.1'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
     // (v4.5)

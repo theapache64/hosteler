@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Hosteler</string>
     <string name="Settings">Settings</string>
-    <string name="PAYMENT_TIME">PAYMENT TIME</string>
+    <string name="Payment_Time">Payment Time</string>
     <string name="Payment_History">Payment History</string>
     <string name="From_last_payment">From last payment</string>
     <string name="BF">Breakfast</string>
@@ -28,4 +28,16 @@
     <string name="default_breakfast_cost">25</string>
     <string name="default_dinner_cost">50</string>
     <string name="default_total_hostelers">3</string>
+    <string name="title_activity_payment_time">PaymentTimeActivity</string>
+    <string name="Failed">Failed</string>
+    <string name="You_cant_edit_paid_dates">You can\'t edit paid dates!</string>
+    <string name="Pending_Amount">Pending Amount</string>
+    <string name="Advance_Amount">Advance Amount</string>
+    <string name="minus">-</string>
+    <string name="Grand_Total">Grand Total</string>
+    <string name="Bill">Bill</string>
+    <string name="Payment">Payment</string>
+    <string name="addition">+</string>
+    <string name="Enter_amount_here">Enter amount here</string>
+    <string name="PAY">PAY</string>
 </resources>

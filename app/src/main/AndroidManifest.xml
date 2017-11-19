@@ -20,11 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.SettingsPrefActivity"
             android:label="@string/Settings" />
-
+        <activity
+            android:name=".activities.PaymentTimeActivity"
+            android:label="@string/Payment_Time"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
