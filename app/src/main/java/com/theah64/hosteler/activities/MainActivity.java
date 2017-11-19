@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -32,17 +33,27 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends BaseAppCompatActivity {
 
+
+    private FoodHistories foodHistoriesTable;
+
+    @BindView(R.id.tvAmount)
+    TextView tvAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FoodHistories foodHistoriesTable = FoodHistories.getInstance(this);
+        foodHistoriesTable = FoodHistories.getInstance(this);
         final LayoutInflater inflater = LayoutInflater.from(this);
         final SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -98,7 +109,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
 
                                     if (foodHistory[0] == null) {
-                                        foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null);
+                                        foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null, false);
                                         foodHistoriesTable.add(foodHistory[0]);
                                     } else {
                                         foodHistory[0].setAdditionalCharge(additionalCharge);
@@ -125,7 +136,7 @@ public class MainActivity extends BaseAppCompatActivity {
                 final List<Integer> selectedIndices = new ArrayList<>();
 
                 if (foodHistory == null) {
-                    foodHistory = new FoodHistory(null, clickedDate, null, 0, 0, 0, 0, 0, null);
+                    foodHistory = new FoodHistory(null, clickedDate, null, 0, 0, 0, 0, 0, null, false);
                 }
 
                 //Convert to list
@@ -237,6 +248,8 @@ public class MainActivity extends BaseAppCompatActivity {
         t.replace(R.id.flCalendar, caldroidFragment);
         t.commit();
 
+        updatePrice();
+
     }
 
     private void setDateBackground(CaldroidFragment caldroidFragment, FoodHistory foodHistory) {
@@ -263,7 +276,8 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void updatePrice() {
-        //TODO: Update total price here
+        final long totalUnPaidAmount = foodHistoriesTable.getTotalUnPaidAmount();
+        tvAmount.setText(String.valueOf(totalUnPaidAmount));
     }
 
     @Override

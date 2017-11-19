@@ -19,8 +19,9 @@ public class FoodHistory {
     private int guestBreakfast;
     private int guestDinner;
     private int additionalCharge;
+    private boolean isPaid;
 
-    public FoodHistory(String id, String date, String description, int breakfast, int dinner, int guestBreakfast, int guestDinner, int additionalCharge, String createdAt) {
+    public FoodHistory(String id, String date, String description, int breakfast, int dinner, int guestBreakfast, int guestDinner, int additionalCharge, String createdAt, boolean isPaid) {
         this.id = id;
         this.date = date;
         this.description = description;
@@ -30,6 +31,11 @@ public class FoodHistory {
         this.guestDinner = guestDinner;
         this.additionalCharge = additionalCharge;
         this.createdAt = createdAt;
+        this.isPaid = isPaid;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
     }
 
     public String getId() {
@@ -107,20 +113,5 @@ public class FoodHistory {
         this.description = description;
     }
 
-    public static FoodHistory parseFromCursor(Cursor cursor) {
 
-        final CustomCursor customCursor = new CustomCursor(cursor);
-        final String id = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_ID);
-        final String date = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_DATE);
-        final String description = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_DESCRIPTION);
-        final int breakfast = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_BREAKFAST);
-        final int dinner = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_DINNER);
-        final int guestBreakfast = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_GUEST_BREAKFAST);
-        final int guestDinner = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_GUEST_DINNER);
-        final int additionalCharge = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_ADDITIONAL_CHARGE);
-        final String createdAt = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_CREATED_AT);
-
-        return new FoodHistory(id, date, description, breakfast, dinner, guestBreakfast, guestDinner, additionalCharge, createdAt);
-
-    }
 }
