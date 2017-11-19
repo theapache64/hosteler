@@ -1,6 +1,7 @@
 package com.theah64.hosteler.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,11 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+import com.joanzapata.iconify.widget.IconTextView;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.theah64.hosteler.R;
@@ -45,6 +48,9 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @BindView(R.id.tvAmount)
     TextView tvAmount;
+
+    @BindView(R.id.itvRupeeIcon)
+    IconTextView itvRupeeIcon;
 
     private CaldroidFragment caldroidFragment;
     private SharedPreferences pref;
@@ -322,6 +328,8 @@ public class MainActivity extends BaseAppCompatActivity {
 
         final long finalAmount = (totalUnPaidAmount + pendingAmount) - advanceAmount;
         tvAmount.setText(String.valueOf(finalAmount));
+        tvAmount.setTextColor(ContextCompat.getColor(this, finalAmount > 0 ? R.color.red_800 : R.color.green_800));
+        itvRupeeIcon.setTextColor(ContextCompat.getColor(this, finalAmount > 0 ? R.color.red_800 : R.color.green_800));
     }
 
     @Override
@@ -367,4 +375,17 @@ public class MainActivity extends BaseAppCompatActivity {
         PaymentTimeActivity.start(this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PaymentTimeActivity.RQ_CODE_PAYMENT_TIME && resultCode == RESULT_OK) {
+            updatePrice();
+            Toast.makeText(this, "Amount updated!", Toast.LENGTH_SHORT).show();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
 }

@@ -462,35 +462,43 @@
         </LinearLayout>
 
 
-        <TextView
-            fontPath="fonts/Lato-Bold.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/Payment"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            tools:ignore="MissingPrefix" />
-
-        <com.theah64.hosteler.widgets.ValidTextInputLayout
-            android:id="@+id/vtilPaymentAmount"
+        <LinearLayout
+            android:id="@+id/llPayment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:orientation="vertical">
 
-            <com.theah64.hosteler.widgets.CustomEditText
+            <TextView
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/Payment"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                tools:ignore="MissingPrefix" />
+
+            <com.theah64.hosteler.widgets.ValidTextInputLayout
+                android:id="@+id/vtilPaymentAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/Enter_amount_here"
-                android:inputType="number" />
-        </com.theah64.hosteler.widgets.ValidTextInputLayout>
+                android:padding="8dp">
 
-        <Button
-            android:id="@+id/bPay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/PAY" />
+                <com.theah64.hosteler.widgets.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Enter_amount_here"
+                    android:inputType="number" />
+            </com.theah64.hosteler.widgets.ValidTextInputLayout>
+
+            <Button
+                android:id="@+id/bPay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/PAY" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

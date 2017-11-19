@@ -1,6 +1,7 @@
 package com.theah64.hosteler.database.tables;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -37,7 +38,12 @@ public class PaymentHistories extends BaseTable<PaymentHistory> {
 
     @Override
     public long add(PaymentHistory newInstance) {
-        return super.add(newInstance);
+        final ContentValues cv = new ContentValues();
+        cv.put(COLUMN_DATE, newInstance.getDate());
+        cv.put(COLUMN_AMOUNT_PAID, newInstance.getAmountPaid());
+        cv.put(COLUMN_ADVANCE_AMOUNT, newInstance.getAdvanceAmount());
+        cv.put(COLUMN_PENDING_AMOUNT, newInstance.getPendingAmount());
+        return this.getWritableDatabase().insert(getTableName(), null, cv);
     }
 
     public PaymentHistory getLastPaymentHistory() {
@@ -58,4 +64,6 @@ public class PaymentHistories extends BaseTable<PaymentHistory> {
         cursor.close();
         return paymentHistory;
     }
+
+
 }

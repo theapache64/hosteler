@@ -42,4 +42,7 @@
     <string name="PAY">PAY</string>
     <string name="New_pending_Amount">New pending amount</string>
     <string name="New_advance_Amount">New advance amount</string>
+    <string name="Do_you_really_want_to_proceed_with_the_payment">Do you really want to proceed with the payment ?</string>
+    <string name="Payment_cancelled">Payment cancelled</string>
+    <string name="Amount_cant_be_zero">Amount can\'t be zero</string>
 </resources>

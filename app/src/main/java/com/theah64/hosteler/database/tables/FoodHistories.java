@@ -31,7 +31,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
     private static final String COLUMN_GUEST_DINNER = "guest_dinner";
     private static final String COLUMN_ADDITIONAL_CHARGE = "additional_charge";
     private static final String COLUMN_CREATED_AT = "created_at";
-    private static final String COLUMN_IS_PAID = "is_paid";
+    public static final String COLUMN_IS_PAID = "is_paid";
 
     private static final String[] ALL_COLUMNS = new String[]{
             COLUMN_ID,
@@ -168,6 +168,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
         final String query = "SELECT (SELECT COUNT(breakfast) FROM food_histories WHERE is_paid=0 AND breakfast>0) AS breakfast_count, (SELECT COUNT(dinner) FROM food_histories WHERE is_paid=0 AND dinner>0) AS dinner_count, (SELECT COUNT(guest_breakfast) FROM food_histories WHERE is_paid=0 AND guest_breakfast>0) AS guest_breakfast_count, (SELECT COUNT(guest_dinner) FROM food_histories WHERE is_paid=0 AND guest_dinner>0) AS guest_dinner_count, (SELECT SUM(breakfast) FROM food_histories WHERE is_paid=0) AS breakfast_cost, (SELECT SUM(dinner) FROM food_histories WHERE is_paid=0 ) AS dinner_cost, (SELECT SUM(guest_breakfast) FROM food_histories WHERE is_paid=0 ) AS guest_breakfast_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE is_paid=0) AS guest_dinner_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE is_paid=0) AS guest_dinner_cost, (SELECT SUM(additional_charge) FROM food_histories WHERE is_paid=0) AS total_additional_charge FROM food_histories LIMIT 1;";
         final Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
+
             final CustomCursor customCursor = new CustomCursor(cursor);
 
             final int breakfastCount = customCursor.getIntByColumnIndex(COLUMN_AS_BREAKFAST_COUNT);
@@ -184,9 +185,11 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
             bill = new Bill(
                     breakfastCount, dinnerCount, guestBreakfastCount, guestDinnerCount,
-                    breakfastCost, dinnerCost, guestBreakfastCost, guestDinnerCost, additionalCharges, 0, 0
+                    breakfastCost, dinnerCost, guestBreakfastCost, guestDinnerCost, additionalCharges
             );
 
+        } else {
+            bill = new Bill(0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
         cursor.close();
         return bill;

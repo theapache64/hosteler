@@ -112,7 +112,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
     }
 
 
-    protected boolean update(String whereColumn, String whereColumnValue, String columnToUpdate, String valueToUpdate) {
+    public boolean update(String whereColumn, String whereColumnValue, String columnToUpdate, String valueToUpdate) {
         final SQLiteDatabase db = this.getWritableDatabase();
         final ContentValues cv = new ContentValues(1);
         cv.put(columnToUpdate, valueToUpdate);

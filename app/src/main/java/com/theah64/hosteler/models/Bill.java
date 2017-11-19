@@ -17,7 +17,7 @@ public class Bill {
 
     private final long additionalCharge;
 
-    public Bill(int breakfastCount, int dinnerCount, int guestBreakfastCount, int guestDinnerCount, long totalBreakfastCost, long totalDinnerCost, long totalGuestBreakfastCost, long totalGuestDinnerCost, long additionalCharge, long pendingAmount, long advanceAmount) {
+    public Bill(int breakfastCount, int dinnerCount, int guestBreakfastCount, int guestDinnerCount, long totalBreakfastCost, long totalDinnerCost, long totalGuestBreakfastCost, long totalGuestDinnerCost, long additionalCharge) {
         this.breakfastCount = breakfastCount;
         this.dinnerCount = dinnerCount;
         this.guestBreakfastCount = guestBreakfastCount;
