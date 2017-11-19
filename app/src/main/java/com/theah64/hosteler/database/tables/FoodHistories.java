@@ -165,7 +165,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
     public Bill getBill() {
         Bill bill = null;
-        final String query = "SELECT COUNT(fh.breakfast) AS breakfast_count, SUM(fh.breakfast) AS breakfast_cost, COUNT(fh.dinner) AS dinner_count, SUM(fh.dinner) AS dinner_cost, COUNT(fh.guest_breakfast) AS guest_breakfast_count, SUM(fh.guest_breakfast) AS guest_breakfast_cost, COUNT(fh.guest_dinner) AS guest_dinner_count, SUM(fh.guest_dinner) AS guest_dinner_cost, SUM(fh.additional_charge) AS total_additional_charge FROM food_histories fh WHERE fh.is_paid = 0;";
+        final String query = "SELECT (SELECT COUNT(breakfast) FROM food_histories WHERE is_paid=0 AND breakfast>0) AS breakfast_count, (SELECT COUNT(dinner) FROM food_histories WHERE is_paid=0 AND dinner>0) AS dinner_count, (SELECT COUNT(guest_breakfast) FROM food_histories WHERE is_paid=0 AND guest_breakfast>0) AS guest_breakfast_count, (SELECT COUNT(guest_dinner) FROM food_histories WHERE is_paid=0 AND guest_dinner>0) AS guest_dinner_count, (SELECT SUM(breakfast) FROM food_histories WHERE is_paid=0) AS breakfast_cost, (SELECT SUM(dinner) FROM food_histories WHERE is_paid=0 ) AS dinner_cost, (SELECT SUM(guest_breakfast) FROM food_histories WHERE is_paid=0 ) AS guest_breakfast_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE is_paid=0) AS guest_dinner_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE is_paid=0) AS guest_dinner_cost, (SELECT SUM(additional_charge) FROM food_histories WHERE is_paid=0) AS total_additional_charge FROM food_histories LIMIT 1;";
         final Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             final CustomCursor customCursor = new CustomCursor(cursor);

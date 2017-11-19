@@ -70,4 +70,19 @@ public class Bill {
     public long getGrandTotal() {
         return (totalBreakfastCost + totalDinnerCost + totalGuestBreakfastCost + totalGuestDinnerCost + additionalCharge);
     }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "breakfastCount=" + breakfastCount +
+                ", dinnerCount=" + dinnerCount +
+                ", guestBreakfastCount=" + guestBreakfastCount +
+                ", guestDinnerCount=" + guestDinnerCount +
+                ", totalBreakfastCost=" + totalBreakfastCost +
+                ", totalDinnerCost=" + totalDinnerCost +
+                ", totalGuestBreakfastCost=" + totalGuestBreakfastCost +
+                ", totalGuestDinnerCost=" + totalGuestDinnerCost +
+                ", additionalCharge=" + additionalCharge +
+                '}';
+    }
 }
