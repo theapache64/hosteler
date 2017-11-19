@@ -1,5 +1,6 @@
 package com.theah64.hosteler.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +10,10 @@ import android.widget.TextView;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.theah64.hosteler.R;
-import com.theah64.hosteler.database.FoodHistories;
+import com.theah64.hosteler.database.tables.FoodHistories;
+import com.theah64.hosteler.database.tables.PaymentHistories;
 import com.theah64.hosteler.models.Bill;
-import com.theah64.hosteler.models.FoodHistory;
+import com.theah64.hosteler.models.PaymentHistory;
 import com.theah64.hosteler.widgets.ValidTextInputLayout;
 
 import butterknife.BindView;
@@ -59,11 +61,9 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
     ValidTextInputLayout vtilPaymentAmount;
 
 
-    public static final String KEY_ADVANCE_AMOUNT = "advance_amount";
-    public static final String KEY_PENDING_AMOUNT = "pending_amount";
-
     private static final String PRIMARY_AMOUNT_FORMAT = "{fa-rupee 17sp @color/grey_400} %s";
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +74,40 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final Bill bill = FoodHistories.getInstance(this).getBill();
+        final PaymentHistory lastPaymentHistory = PaymentHistories.getInstance(this).getLastPaymentHistory();
 
+        long grandTotal = bill.getGrandTotal();
+        long pendingAmount = 0;
+        long advanceAmount = 0;
+
+        if (lastPaymentHistory != null) {
+            pendingAmount = lastPaymentHistory.getPendingAmount();
+            advanceAmount = lastPaymentHistory.getAdvanceAmount();
+            grandTotal += pendingAmount;
+            grandTotal -= advanceAmount;
+        }
+
+
+        tvBreakfastCount.setText("x"+bill.getBreakfastCount());
+        tvDinnerCount.setText("x"+bill.getDinnerCount());
+        tvGuestBreakfastCount.setText("x"+bill.getGuestBreakfastCount());
+        tvGuestDinnerCount.setText("x"+bill.getGuestDinnerCount());
+
+        setRupeeText(tvTotalBreakfastCost, bill.getTotalBreakfastCost());
+        setRupeeText(tvTotalDinnerCost, bill.getTotalDinnerCost());
+        setRupeeText(tvTotalGuestBreakfastCost, bill.getTotalGuestBreakfastCost());
+        setRupeeText(tvTotalGuestDinnerCost, bill.getTotalGuestDinnerCost());
+        setRupeeText(tvTotalAdditionalCharge, bill.getTotalAdditionalCharge());
+
+
+        setRupeeText(tvPendingAmount, pendingAmount);
+        setRupeeText(tvAdvanceAmount, advanceAmount);
+        setRupeeText(tvGrandTotal, grandTotal);
     }
 
-
+    private void setRupeeText(IconTextView itv, long cost) {
+        itv.setText(String.format(PRIMARY_AMOUNT_FORMAT, cost));
+    }
 
 
     @Override

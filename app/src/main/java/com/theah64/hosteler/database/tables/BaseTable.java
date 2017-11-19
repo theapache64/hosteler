@@ -1,4 +1,4 @@
-package com.theah64.hosteler.database;
+package com.theah64.hosteler.database.tables;
 
 import android.content.ContentValues;
 import android.content.Context;

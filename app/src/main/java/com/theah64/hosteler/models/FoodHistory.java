@@ -1,10 +1,5 @@
 package com.theah64.hosteler.models;
 
-import android.database.Cursor;
-
-import com.theah64.hosteler.database.CustomCursor;
-import com.theah64.hosteler.database.FoodHistories;
-
 /**
  * Created by theapache64 on 16/11/17.
  */

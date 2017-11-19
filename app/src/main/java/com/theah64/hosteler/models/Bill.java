@@ -16,10 +16,8 @@ public class Bill {
     private final long totalGuestDinnerCost;
 
     private final long additionalCharge;
-    private final long pendingAmount;
-    private final long advanceAmount;
 
-    Bill(int breakfastCount, int dinnerCount, int guestBreakfastCount, int guestDinnerCount, long totalBreakfastCost, long totalDinnerCost, long totalGuestBreakfastCost, long totalGuestDinnerCost, long additionalCharge, long pendingAmount, long advanceAmount) {
+    public Bill(int breakfastCount, int dinnerCount, int guestBreakfastCount, int guestDinnerCount, long totalBreakfastCost, long totalDinnerCost, long totalGuestBreakfastCost, long totalGuestDinnerCost, long additionalCharge, long pendingAmount, long advanceAmount) {
         this.breakfastCount = breakfastCount;
         this.dinnerCount = dinnerCount;
         this.guestBreakfastCount = guestBreakfastCount;
@@ -29,9 +27,8 @@ public class Bill {
         this.totalGuestBreakfastCost = totalGuestBreakfastCost;
         this.totalGuestDinnerCost = totalGuestDinnerCost;
         this.additionalCharge = additionalCharge;
-        this.pendingAmount = pendingAmount;
-        this.advanceAmount = advanceAmount;
     }
+
 
     public int getBreakfastCount() {
         return breakfastCount;
@@ -65,19 +62,12 @@ public class Bill {
         return totalGuestDinnerCost;
     }
 
-    public long getAdditionalCharge() {
+    public long getTotalAdditionalCharge() {
         return additionalCharge;
     }
 
-    public long getPendingAmount() {
-        return pendingAmount;
-    }
-
-    public long getAdvanceAmount() {
-        return advanceAmount;
-    }
 
     public long getGrandTotal() {
-        return (totalBreakfastCost + totalDinnerCost + totalGuestBreakfastCost + totalGuestDinnerCost + additionalCharge + pendingAmount) - advanceAmount;
+        return (totalBreakfastCost + totalDinnerCost + totalGuestBreakfastCost + totalGuestDinnerCost + additionalCharge);
     }
 }

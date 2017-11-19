@@ -1,10 +1,11 @@
-package com.theah64.hosteler.database;
+package com.theah64.hosteler.database.tables;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.theah64.hosteler.database.CustomCursor;
 import com.theah64.hosteler.models.Bill;
 import com.theah64.hosteler.models.FoodHistory;
 
@@ -44,6 +45,16 @@ public class FoodHistories extends BaseTable<FoodHistory> {
             COLUMN_IS_PAID,
             COLUMN_CREATED_AT
     };
+    private static final String COLUMN_AS_BREAKFAST_COUNT = "breakfast_count";
+    private static final String COLUMN_AS_DINNER_COUNT = "dinner_count";
+    private static final String COLUMN_AS_GUEST_BREAKFAST_COUNT = "guest_breakfast_count";
+    private static final String COLUMN_AS_GUEST_DINNER_COUNT = "guest_dinner_count";
+
+    private static final String COLUMN_AS_BREAKFAST_COST = "breakfast_cost";
+    private static final String COLUMN_AS_DINNER_COST = "dinner_cost";
+    private static final String COLUMN_AS_GUEST_BREAKFAST_COST = "guest_breakfast_cost";
+    private static final String COLUMN_AS_GUEST_DINNER_COST = "guest_dinner_cost";
+    private static final String COLUMN_AS_TOTAL_ADDITIONAL_CHARGES = "total_additional_charge";
 
     @SuppressLint("StaticFieldLeak")
     private static FoodHistories instance;
@@ -143,7 +154,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
     public long getTotalUnPaidAmount() {
         long totalUnPaidAmount = 0;
-        final String query = "SELECT (SUM(fh.breakfast)+SUM(fh.dinner)+SUM(fh.guest_breakfast)+SUM(fh.guest_dinner)) AS total_unpaid_amount FROM food_histories fh WHERE fh.is_paid=0;";
+        final String query = "SELECT (SUM(fh.breakfast)+SUM(fh.dinner)+SUM(fh.guest_breakfast)+SUM(fh.guest_dinner) + SUM(additional_charge)) AS total_unpaid_amount FROM food_histories fh WHERE fh.is_paid=0;";
         final Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             totalUnPaidAmount = cursor.getLong(0);
@@ -154,6 +165,30 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
     public Bill getBill() {
         Bill bill = null;
+        final String query = "SELECT COUNT(fh.breakfast) AS breakfast_count, SUM(fh.breakfast) AS breakfast_cost, COUNT(fh.dinner) AS dinner_count, SUM(fh.dinner) AS dinner_cost, COUNT(fh.guest_breakfast) AS guest_breakfast_count, SUM(fh.guest_breakfast) AS guest_breakfast_cost, COUNT(fh.guest_dinner) AS guest_dinner_count, SUM(fh.guest_dinner) AS guest_dinner_cost, SUM(fh.additional_charge) AS total_additional_charge FROM food_histories fh WHERE fh.is_paid = 0;";
+        final Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            final CustomCursor customCursor = new CustomCursor(cursor);
+
+            final int breakfastCount = customCursor.getIntByColumnIndex(COLUMN_AS_BREAKFAST_COUNT);
+            final int dinnerCount = customCursor.getIntByColumnIndex(COLUMN_AS_DINNER_COUNT);
+            final int guestBreakfastCount = customCursor.getIntByColumnIndex(COLUMN_AS_GUEST_BREAKFAST_COUNT);
+            final int guestDinnerCount = customCursor.getIntByColumnIndex(COLUMN_AS_GUEST_DINNER_COUNT);
+
+            final int breakfastCost = customCursor.getIntByColumnIndex(COLUMN_AS_BREAKFAST_COST);
+            final int dinnerCost = customCursor.getIntByColumnIndex(COLUMN_AS_DINNER_COST);
+            final int guestBreakfastCost = customCursor.getIntByColumnIndex(COLUMN_AS_GUEST_BREAKFAST_COST);
+            final int guestDinnerCost = customCursor.getIntByColumnIndex(COLUMN_AS_GUEST_DINNER_COST);
+
+            final int additionalCharges = customCursor.getIntByColumnIndex(COLUMN_AS_TOTAL_ADDITIONAL_CHARGES);
+
+            bill = new Bill(
+                    breakfastCount, dinnerCount, guestBreakfastCount, guestDinnerCount,
+                    breakfastCost, dinnerCost, guestBreakfastCost, guestDinnerCost, additionalCharges, 0, 0
+            );
+
+        }
+        cursor.close();
         return bill;
     }
 }

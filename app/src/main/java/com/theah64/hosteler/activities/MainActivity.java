@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -24,8 +22,10 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.theah64.hosteler.R;
-import com.theah64.hosteler.database.FoodHistories;
+import com.theah64.hosteler.database.tables.FoodHistories;
+import com.theah64.hosteler.database.tables.PaymentHistories;
 import com.theah64.hosteler.models.FoodHistory;
+import com.theah64.hosteler.models.PaymentHistory;
 import com.theah64.hosteler.utils.DateUtils;
 import com.theah64.hosteler.widgets.ValidTextInputLayout;
 
@@ -35,21 +35,21 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseAppCompatActivity {
 
 
     private FoodHistories foodHistoriesTable;
+    private PaymentHistories paymentHistories;
 
     @BindView(R.id.tvAmount)
     TextView tvAmount;
 
-
     private CaldroidFragment caldroidFragment;
     private SharedPreferences pref;
     private LayoutInflater inflater;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,9 @@ public class MainActivity extends BaseAppCompatActivity {
         setSupportActionBar(toolbar);
 
         foodHistoriesTable = FoodHistories.getInstance(this);
+        paymentHistories = PaymentHistories.getInstance(this);
+
+
         inflater = LayoutInflater.from(this);
         pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -304,10 +307,19 @@ public class MainActivity extends BaseAppCompatActivity {
         }
     }
 
+
     private void updatePrice() {
+
         final long totalUnPaidAmount = foodHistoriesTable.getTotalUnPaidAmount();
-        final long advanceAmount = pref.getLong(PaymentTimeActivity.KEY_ADVANCE_AMOUNT, 0);
-        final long pendingAmount = pref.getLong(PaymentTimeActivity.KEY_PENDING_AMOUNT, 0);
+        final PaymentHistory lastPaymentHistory = paymentHistories.getLastPaymentHistory();
+        long advanceAmount = 0;
+        long pendingAmount = 0;
+
+        if (lastPaymentHistory != null) {
+            advanceAmount = lastPaymentHistory.getAdvanceAmount();
+            pendingAmount = lastPaymentHistory.getPendingAmount();
+        }
+
         final long finalAmount = (totalUnPaidAmount + pendingAmount) - advanceAmount;
         tvAmount.setText(String.valueOf(finalAmount));
     }
