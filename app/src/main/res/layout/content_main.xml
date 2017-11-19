@@ -27,6 +27,7 @@
 
             <!--Hints-->
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -65,44 +66,45 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/From_last_payment"
-                android:textColor="@color/grey_400" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <com.joanzapata.iconify.widget.IconTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginRight="2dp"
-                    android:text="{fa-rupee}"
-                    android:textColor="@color/grey_700" />
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.00"
-                    android:textColor="@color/grey_800"
-                    android:textSize="42sp" />
+                    android:text="@string/From_last_payment"
+                    android:textColor="@color/grey_400" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.joanzapata.iconify.widget.IconTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginRight="2dp"
+                        android:text="{fa-rupee}"
+                        android:textColor="@color/grey_700" />
+
+                    <TextView
+                        android:id="@+id/tvAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00"
+                        android:textColor="@color/grey_800"
+                        android:textSize="42sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-
-        <Button
-            android:id="@+id/bPaymentTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Payment_Time" />
 
     </LinearLayout>
 

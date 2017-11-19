@@ -3,15 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.theah64.hosteler.activities.MainActivity">
 
+
+    <item
+        android:id="@+id/miPaymentTime"
+        android:orderInCategory="1"
+        android:title="@string/Payment_Time"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/miPaymentHistory"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:title="@string/Payment_History"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/miSettings"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:title="@string/Settings"
         app:showAsAction="ifRoom" />
 

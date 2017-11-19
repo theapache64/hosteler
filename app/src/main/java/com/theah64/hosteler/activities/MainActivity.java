@@ -331,8 +331,11 @@ public class MainActivity extends BaseAppCompatActivity {
 
         final MenuItem miSettings = menu.findItem(R.id.miSettings);
         final MenuItem miPaymentHistory = menu.findItem(R.id.miPaymentHistory);
+        final MenuItem miPaymentTime = menu.findItem(R.id.miPaymentTime);
+
         miSettings.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_cog).colorRes(android.R.color.white).sizeDp(22));
         miPaymentHistory.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_history).colorRes(android.R.color.white).sizeDp(22));
+        miPaymentTime.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_money).colorRes(android.R.color.white).sizeDp(22));
 
         return true;
     }
@@ -348,6 +351,10 @@ public class MainActivity extends BaseAppCompatActivity {
             case R.id.miSettings:
                 startActivity(new Intent(this, SettingsPrefActivity.class));
                 break;
+
+            case R.id.miPaymentTime:
+                onPaymentTimeClicked();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -356,7 +363,6 @@ public class MainActivity extends BaseAppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.bPaymentTime)
     public void onPaymentTimeClicked() {
         PaymentTimeActivity.start(this);
     }

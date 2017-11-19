@@ -40,4 +40,6 @@
     <string name="addition">+</string>
     <string name="Enter_amount_here">Enter amount here</string>
     <string name="PAY">PAY</string>
+    <string name="New_pending_Amount">New pending amount</string>
+    <string name="New_advance_Amount">New advance amount</string>
 </resources>

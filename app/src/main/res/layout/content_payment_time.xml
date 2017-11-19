@@ -269,9 +269,9 @@
         </LinearLayout>
 
 
-
         <!--Pending amount-->
         <LinearLayout
+            android:id="@+id/llPendingAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -314,6 +314,7 @@
 
         <!--Advance amount-->
         <LinearLayout
+            android:id="@+id/llAdvanceAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -358,7 +359,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="8dp"
-            android:background="@color/grey_400" />
+            android:background="@color/grey_200" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -394,7 +395,71 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="8dp"
-            android:background="@color/grey_400" />
+            android:background="@color/grey_200" />
+
+
+        <!--Pending amount-->
+        <LinearLayout
+            android:id="@+id/llNewPendingAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="55"
+                android:text="@string/New_pending_Amount"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvNewPendingAmount"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:gravity="end"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+
+        </LinearLayout>
+
+        <!--Advance amount-->
+        <LinearLayout
+            android:id="@+id/llNewAdvanceAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="55"
+                android:text="@string/New_advance_Amount"
+                android:textColor="@color/grey_800"
+                android:textSize="16sp" />
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/tvNewAdvanceAmount"
+                fontPath="fonts/Lato-Bold.ttf"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:gravity="end"
+                android:textColor="@color/grey_900"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+
+
+        </LinearLayout>
 
 
         <TextView
