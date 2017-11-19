@@ -1,5 +1,6 @@
 package com.theah64.hosteler.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,15 +20,15 @@ import java.util.List;
 public class FoodHistories extends BaseTable<FoodHistory> {
 
 
-    public static final String COLUMN_ID = "id";
+    private static final String COLUMN_ID = "id";
     public static final String COLUMN_DATE = "_date";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_BREAKFAST = "breakfast";
-    public static final String COLUMN_DINNER = "dinner";
-    public static final String COLUMN_GUEST_BREAKFAST = "guest_breakfast";
-    public static final String COLUMN_GUEST_DINNER = "guest_dinner";
-    public static final String COLUMN_ADDITIONAL_CHARGE = "additional_charge";
-    public static final String COLUMN_CREATED_AT = "created_at";
+    private static final String COLUMN_DESCRIPTION = "description";
+    private static final String COLUMN_BREAKFAST = "breakfast";
+    private static final String COLUMN_DINNER = "dinner";
+    private static final String COLUMN_GUEST_BREAKFAST = "guest_breakfast";
+    private static final String COLUMN_GUEST_DINNER = "guest_dinner";
+    private static final String COLUMN_ADDITIONAL_CHARGE = "additional_charge";
+    private static final String COLUMN_CREATED_AT = "created_at";
     private static final String COLUMN_IS_PAID = "is_paid";
 
     private static final String[] ALL_COLUMNS = new String[]{
@@ -43,16 +44,20 @@ public class FoodHistories extends BaseTable<FoodHistory> {
             COLUMN_CREATED_AT
     };
 
+    @SuppressLint("StaticFieldLeak")
     private static FoodHistories instance;
 
-    protected FoodHistories(Context context) {
+    private FoodHistories(Context context) {
         super(context, "food_histories");
     }
 
     public static FoodHistories getInstance(Context context) {
         if (instance == null) {
             instance = new FoodHistories(context);
+        } else {
+            instance.setContext(context);
         }
+
         return instance;
     }
 
