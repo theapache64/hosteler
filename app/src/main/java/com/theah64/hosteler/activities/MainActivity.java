@@ -111,6 +111,7 @@ public class MainActivity extends BaseAppCompatActivity {
         final List<String> foodTypeList = new ArrayList<String>();
         foodTypeList.addAll(Arrays.asList(getResources().getStringArray(R.array.food_types)));
 
+        //Setting current
         if (foodHistory.getBreakfast() > 0) {
             selectedIndices.add(foodTypeList.indexOf(getString(R.string.Breakfast)));
         }
@@ -164,6 +165,7 @@ public class MainActivity extends BaseAppCompatActivity {
                                 //Looping through all 4 indices
                                 for (int i = 0; i < 4; i++) {
 
+                                    //Setting new values
                                     if (selectedIndices.contains(i)) {
                                         if (i == foodTypeList.indexOf(getString(R.string.Breakfast))) {
                                             finalFoodHistory.setBreakfast(breakFastCharge);
@@ -220,7 +222,11 @@ public class MainActivity extends BaseAppCompatActivity {
         final FoodHistory[] foodHistory = {foodHistoriesTable.get(FoodHistories.COLUMN_DATE, sDate)};
 
         if (foodHistory[0] != null) {
-            vtilAdditionalCharge.setText(String.valueOf(foodHistory[0].getAdditionalCharge()));
+
+            if (foodHistory[0].getAdditionalCharge() != 0) {
+                vtilAdditionalCharge.setText(String.valueOf(foodHistory[0].getAdditionalCharge()));
+            }
+
             vtilDescription.setText(foodHistory[0].getDescription());
         }
 
@@ -234,8 +240,8 @@ public class MainActivity extends BaseAppCompatActivity {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         if (which == DialogAction.POSITIVE) {
 
-                            if (!vtilAdditionalCharge.isMatch()) {
-                                return;
+                            if (vtilAdditionalCharge.getString() == null) {
+                                vtilAdditionalCharge.setText("0");
                             }
 
                             //Submit additional charge here
