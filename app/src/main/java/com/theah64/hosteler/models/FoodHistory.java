@@ -14,9 +14,9 @@ public class FoodHistory {
     private int guestBreakfast;
     private int guestDinner;
     private int additionalCharge;
-    private boolean isPaid;
+    private final String paymentHistoryId;
 
-    public FoodHistory(String id, String date, String description, int breakfast, int dinner, int guestBreakfast, int guestDinner, int additionalCharge, String createdAt, boolean isPaid) {
+    public FoodHistory(String id, String date, String description, int breakfast, int dinner, int guestBreakfast, int guestDinner, int additionalCharge, String createdAt, String paymentHistoryId) {
         this.id = id;
         this.date = date;
         this.description = description;
@@ -26,11 +26,11 @@ public class FoodHistory {
         this.guestDinner = guestDinner;
         this.additionalCharge = additionalCharge;
         this.createdAt = createdAt;
-        this.isPaid = isPaid;
+        this.paymentHistoryId = paymentHistoryId;
     }
 
-    public boolean isPaid() {
-        return isPaid;
+    public String getPaymentHistoryId() {
+        return paymentHistoryId;
     }
 
     public String getId() {
@@ -91,12 +91,13 @@ public class FoodHistory {
                 "id='" + id + '\'' +
                 ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
+                ", createdAt='" + createdAt + '\'' +
                 ", breakfast=" + breakfast +
                 ", dinner=" + dinner +
                 ", guestBreakfast=" + guestBreakfast +
                 ", guestDinner=" + guestDinner +
                 ", additionalCharge=" + additionalCharge +
-                ", createdAt=" + createdAt +
+                ", paymentHistoryId='" + paymentHistoryId + '\'' +
                 '}';
     }
 

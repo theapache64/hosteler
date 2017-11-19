@@ -237,8 +237,8 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
                                             null
                                     );
 
-                                    foodHistoriesTable.update(FoodHistories.COLUMN_IS_PAID, "0", FoodHistories.COLUMN_IS_PAID, "1");
-                                    paymentHistoriesTable.add(paymentHistory);
+                                    final String paymentHistoryId = String.valueOf(paymentHistoriesTable.add(paymentHistory));
+                                    foodHistoriesTable.update(FoodHistories.COLUMN_PAYMENT_HISTORY_ID, "is null", FoodHistories.COLUMN_PAYMENT_HISTORY_ID, paymentHistoryId);
                                     Toast.makeText(PaymentTimeActivity.this, "Payment finished!", Toast.LENGTH_SHORT).show();
                                     setResult(RESULT_OK);
                                     finish();

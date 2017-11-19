@@ -7,11 +7,12 @@ CREATE TABLE food_histories(
 	dinner INTEGER NOT NULL,
 	guest_breakfast INTEGER NOT NULL ,
     guest_dinner INTEGER NOT NULL ,
-    is_paid INTEGER CHECK (is_paid IN (0,1)) NOT NULL,
+    payment_history_id INTEGER DEFAULT NULL,
     additional_charge INTEGER NOT NULL,
     description TEXT,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	UNIQUE (_date)
+	UNIQUE (_date),
+	FOREIGN KEY (payment_history_id) REFERENCES payment_histories(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS payment_histories;

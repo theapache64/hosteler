@@ -412,7 +412,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="55"
                 android:text="@string/New_pending_Amount"
-                android:textColor="@color/grey_800"
+                android:textColor="@color/red_800"
                 android:textSize="16sp" />
 
 
@@ -423,7 +423,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="40"
                 android:gravity="end"
-                android:textColor="@color/grey_900"
+                android:textColor="@color/red_900"
                 android:textSize="17sp"
                 tools:ignore="MissingPrefix" />
 
@@ -444,7 +444,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="55"
                 android:text="@string/New_advance_Amount"
-                android:textColor="@color/grey_800"
+                android:textColor="@color/green_800"
                 android:textSize="16sp" />
 
             <com.joanzapata.iconify.widget.IconTextView
@@ -454,7 +454,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="40"
                 android:gravity="end"
-                android:textColor="@color/grey_900"
+                android:textColor="@color/green_900"
                 android:textSize="17sp"
                 tools:ignore="MissingPrefix" />
 
@@ -488,7 +488,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/Enter_amount_here"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:maxLength="10" />
             </com.theah64.hosteler.widgets.ValidTextInputLayout>
 
             <Button

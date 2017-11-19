@@ -31,7 +31,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
     private static final String COLUMN_GUEST_DINNER = "guest_dinner";
     private static final String COLUMN_ADDITIONAL_CHARGE = "additional_charge";
     private static final String COLUMN_CREATED_AT = "created_at";
-    public static final String COLUMN_IS_PAID = "is_paid";
+    public static final String COLUMN_PAYMENT_HISTORY_ID = "payment_history_id";
 
     private static final String[] ALL_COLUMNS = new String[]{
             COLUMN_ID,
@@ -42,7 +42,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
             COLUMN_GUEST_BREAKFAST,
             COLUMN_GUEST_DINNER,
             COLUMN_ADDITIONAL_CHARGE,
-            COLUMN_IS_PAID,
+            COLUMN_PAYMENT_HISTORY_ID,
             COLUMN_CREATED_AT
     };
     private static final String COLUMN_AS_BREAKFAST_COUNT = "breakfast_count";
@@ -101,10 +101,10 @@ public class FoodHistories extends BaseTable<FoodHistory> {
         final int guestBreakfast = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_GUEST_BREAKFAST);
         final int guestDinner = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_GUEST_DINNER);
         final int additionalCharge = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_ADDITIONAL_CHARGE);
-        final boolean isPaid = customCursor.getBooleanByColumnIndex(FoodHistories.COLUMN_IS_PAID);
+        final String paymentHistoryId = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_PAYMENT_HISTORY_ID);
         final String createdAt = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_CREATED_AT);
 
-        return new FoodHistory(id, date, description, breakfast, dinner, guestBreakfast, guestDinner, additionalCharge, createdAt, isPaid);
+        return new FoodHistory(id, date, description, breakfast, dinner, guestBreakfast, guestDinner, additionalCharge, createdAt, paymentHistoryId);
 
     }
 
@@ -117,7 +117,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
         cv.put(COLUMN_DINNER, foodHistory.getDinner());
         cv.put(COLUMN_GUEST_BREAKFAST, foodHistory.getGuestBreakfast());
         cv.put(COLUMN_GUEST_DINNER, foodHistory.getGuestDinner());
-        cv.put(COLUMN_IS_PAID, foodHistory.isPaid());
+        cv.put(COLUMN_PAYMENT_HISTORY_ID, foodHistory.getPaymentHistoryId());
         cv.put(COLUMN_ADDITIONAL_CHARGE, foodHistory.getAdditionalCharge());
 
         return this.getWritableDatabase().insert(getTableName(), null, cv);
@@ -133,7 +133,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
         cv.put(COLUMN_DINNER, foodHistory.getDinner());
         cv.put(COLUMN_GUEST_BREAKFAST, foodHistory.getGuestBreakfast());
         cv.put(COLUMN_GUEST_DINNER, foodHistory.getGuestDinner());
-        cv.put(COLUMN_IS_PAID, foodHistory.isPaid());
+        cv.put(COLUMN_PAYMENT_HISTORY_ID, foodHistory.getPaymentHistoryId());
         cv.put(COLUMN_ADDITIONAL_CHARGE, foodHistory.getAdditionalCharge());
 
         return this.getWritableDatabase().update(getTableName(), cv, COLUMN_ID + " = ?", new String[]{foodHistory.getId()}) > 0;
@@ -154,7 +154,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
     public long getTotalUnPaidAmount() {
         long totalUnPaidAmount = 0;
-        final String query = "SELECT (SUM(fh.breakfast)+SUM(fh.dinner)+SUM(fh.guest_breakfast)+SUM(fh.guest_dinner) + SUM(additional_charge)) AS total_unpaid_amount FROM food_histories fh WHERE fh.is_paid=0;";
+        final String query = "SELECT (SUM(fh.breakfast)+SUM(fh.dinner)+SUM(fh.guest_breakfast)+SUM(fh.guest_dinner) + SUM(additional_charge)) AS total_unpaid_amount FROM food_histories fh WHERE fh.payment_history_id is null;";
         final Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
             totalUnPaidAmount = cursor.getLong(0);
@@ -165,7 +165,7 @@ public class FoodHistories extends BaseTable<FoodHistory> {
 
     public Bill getBill() {
         Bill bill = null;
-        final String query = "SELECT (SELECT COUNT(breakfast) FROM food_histories WHERE is_paid=0 AND breakfast>0) AS breakfast_count, (SELECT COUNT(dinner) FROM food_histories WHERE is_paid=0 AND dinner>0) AS dinner_count, (SELECT COUNT(guest_breakfast) FROM food_histories WHERE is_paid=0 AND guest_breakfast>0) AS guest_breakfast_count, (SELECT COUNT(guest_dinner) FROM food_histories WHERE is_paid=0 AND guest_dinner>0) AS guest_dinner_count, (SELECT SUM(breakfast) FROM food_histories WHERE is_paid=0) AS breakfast_cost, (SELECT SUM(dinner) FROM food_histories WHERE is_paid=0 ) AS dinner_cost, (SELECT SUM(guest_breakfast) FROM food_histories WHERE is_paid=0 ) AS guest_breakfast_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE is_paid=0) AS guest_dinner_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE is_paid=0) AS guest_dinner_cost, (SELECT SUM(additional_charge) FROM food_histories WHERE is_paid=0) AS total_additional_charge FROM food_histories LIMIT 1;";
+        final String query = "SELECT (SELECT COUNT(breakfast) FROM food_histories WHERE payment_history_id is null AND breakfast>0) AS breakfast_count, (SELECT COUNT(dinner) FROM food_histories WHERE payment_history_id is null AND dinner>0) AS dinner_count, (SELECT COUNT(guest_breakfast) FROM food_histories WHERE payment_history_id is null AND guest_breakfast>0) AS guest_breakfast_count, (SELECT COUNT(guest_dinner) FROM food_histories WHERE payment_history_id is null AND guest_dinner>0) AS guest_dinner_count, (SELECT SUM(breakfast) FROM food_histories WHERE payment_history_id is null) AS breakfast_cost, (SELECT SUM(dinner) FROM food_histories WHERE payment_history_id is null ) AS dinner_cost, (SELECT SUM(guest_breakfast) FROM food_histories WHERE payment_history_id is null ) AS guest_breakfast_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE payment_history_id is null) AS guest_dinner_cost, (SELECT SUM(guest_dinner) FROM food_histories WHERE payment_history_id is null) AS guest_dinner_cost, (SELECT SUM(additional_charge) FROM food_histories WHERE payment_history_id is null) AS total_additional_charge FROM food_histories LIMIT 1;";
         final Cursor cursor = this.getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
 

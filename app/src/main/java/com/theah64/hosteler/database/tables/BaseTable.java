@@ -116,7 +116,7 @@ public class BaseTable<T> extends SQLiteOpenHelper {
         final SQLiteDatabase db = this.getWritableDatabase();
         final ContentValues cv = new ContentValues(1);
         cv.put(columnToUpdate, valueToUpdate);
-        return db.update(tableName, cv, whereColumn + " = ? ", new String[]{whereColumnValue}) > 0;
+        return db.update(tableName, cv, whereColumn + (whereColumnValue.equals("is null") ? " is null" : " = ? "), whereColumnValue.equals("is null") ? null : new String[]{whereColumnValue}) > 0;
     }
 
 

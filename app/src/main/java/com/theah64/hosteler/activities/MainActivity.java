@@ -116,7 +116,7 @@ public class MainActivity extends BaseAppCompatActivity {
         final List<Integer> selectedIndices = new ArrayList<>();
 
         if (foodHistory == null) {
-            foodHistory = new FoodHistory(null, clickedDate, null, 0, 0, 0, 0, 0, null, false);
+            foodHistory = new FoodHistory(null, clickedDate, null, 0, 0, 0, 0, 0, null, null);
         }
 
         //Convert to list
@@ -165,7 +165,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
                         if (which == DialogAction.POSITIVE) {
 
-                            if (finalFoodHistory.isPaid()) {
+                            if (finalFoodHistory.getPaymentHistoryId() != null) {
                                 new MaterialDialog.Builder(MainActivity.this)
                                         .title(R.string.Failed)
                                         .content(R.string.You_cant_edit_paid_dates)
@@ -272,7 +272,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
 
                             if (foodHistory[0] == null) {
-                                foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null, false);
+                                foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null, null);
                                 foodHistoriesTable.add(foodHistory[0]);
                             } else {
                                 foodHistory[0].setAdditionalCharge(additionalCharge);
