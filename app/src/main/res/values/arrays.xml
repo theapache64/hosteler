@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="food_types">
-        <item>Breakfast</item>
-        <item>Dinner</item>
-        <item>Guest Breakfast</item>
-        <item>Guest Dinner</item>
+        <item>@string/Breakfast</item>
+        <item>@string/Dinner</item>
+        <item>@string/Guest_Breakfast</item>
+        <item>@string/Guest_Dinner</item>
     </string-array>
+
+
+    <string name="Breakfast">Breakfast</string>
+    <string name="Dinner">Dinner</string>
+    <string name="Guest_Breakfast">Guest Breakfast</string>
+    <string name="Guest_Dinner">Guest Dinner</string>
 </resources>

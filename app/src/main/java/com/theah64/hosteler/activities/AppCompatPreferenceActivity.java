@@ -1,4 +1,4 @@
-package com.theah64.hosteler;
+package com.theah64.hosteler.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

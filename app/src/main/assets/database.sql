@@ -13,6 +13,7 @@ CREATE TABLE food_histories(
 	UNIQUE (_date)
 );
 
+DROP TABLE IF EXISTS payment_histories;
 CREATE TABLE payment_histories(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     from_date TEXT NOT NULL,

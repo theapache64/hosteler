@@ -1,16 +1,31 @@
 <resources>
     <string name="app_name">Hosteler</string>
-    <string name="action_settings">Settings</string>
+    <string name="Settings">Settings</string>
     <string name="PAYMENT_TIME">PAYMENT TIME</string>
     <string name="Payment_History">Payment History</string>
     <string name="From_last_payment">From last payment</string>
-    <string name="BF">BF</string>
-    <string name="DN">DN</string>
-    <string name="BOTH">BOTH</string>
+    <string name="BF">Breakfast</string>
+    <string name="DN">Dinner</string>
+    <string name="BOTH">Both</string>
     <string name="DONE">DONE</string>
     <string name="Additional_charge">Additional charge</string>
     <string name="Empty">Can\'t be empty</string>
     <string name="Description">Description</string>
     <string name="ADD">ADD</string>
-    <string name="CANCEL">CANCEL</string>
+    <string name="OTHER">OTHER</string>
+    <string name="lazy_mode_desc">Breakfast and dinner will be added automatically (saturday no dinner ,monday no breakfast and sunday nothing)</string>
+    <string name="Lazy_Mode">Lazy Mode</string>
+    <string name="Breakfast_charge">Breakfast charge</string>
+    <string name="Cost_for_one_breakfast">Cost for one breakfast</string>
+    <string name="Cost_for_one_dinner">Cost for one dinner</string>
+    <string name="Dinner_Charge">Dinner charge</string>
+    <string name="Number_of_hostelers">Number of hostelers</string>
+    <string name="Total_hostelers">Total hostelers</string>
+    <string name="lazy_mode">lazy_mode</string>
+    <string name="breakfast_charge">breakfast_charge</string>
+    <string name="dinner_charge">dinner_charge</string>
+    <string name="total_hostelers">total_hostelers</string>
+    <string name="default_breakfast_cost">25</string>
+    <string name="default_dinner_cost">50</string>
+    <string name="default_total_hostelers">3</string>
 </resources>

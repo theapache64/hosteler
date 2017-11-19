@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    
+
+    <CheckBoxPreference
+        android:key="@string/lazy_mode"
+        android:persistent="true"
+        android:summary="@string/lazy_mode_desc"
+        android:title="@string/Lazy_Mode" />
+
+    <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
+        android:defaultValue="@string/default_breakfast_cost"
+        android:dialogMessage="@string/Cost_for_one_breakfast"
+        android:dialogTitle="@string/Breakfast_charge"
+        android:inputType="number"
+        android:key="@string/breakfast_charge"
+        android:persistent="true"
+        android:summary="@string/Cost_for_one_breakfast"
+        android:title="@string/Breakfast_charge" />
+
+    <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
+        android:defaultValue="@string/default_dinner_cost"
+        android:dialogMessage="@string/Cost_for_one_dinner"
+        android:dialogTitle="@string/Dinner_Charge"
+        android:inputType="number"
+        android:key="@string/dinner_charge"
+        android:persistent="true"
+        android:summary="@string/Cost_for_one_dinner"
+        android:title="@string/Dinner_Charge" />
+
+    <com.afollestad.materialdialogs.prefs.MaterialEditTextPreference
+        android:defaultValue="@string/default_total_hostelers"
+        android:dialogMessage="@string/Number_of_hostelers"
+        android:dialogTitle="@string/Total_hostelers"
+        android:inputType="number"
+        android:key="@string/total_hostelers"
+        android:persistent="true"
+        android:summary="@string/Number_of_hostelers"
+        android:title="@string/Total_hostelers" />
+
 </PreferenceScreen>

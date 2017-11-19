@@ -1,4 +1,4 @@
-package com.theah64.hosteler;
+package com.theah64.hosteler.activities;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;

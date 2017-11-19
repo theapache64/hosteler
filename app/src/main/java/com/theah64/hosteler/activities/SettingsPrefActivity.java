@@ -1,17 +1,13 @@
-package com.theah64.hosteler;
+package com.theah64.hosteler.activities;
 
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
 import android.view.MenuItem;
+
+import com.theah64.hosteler.R;
 
 /**
  * Created by theapache64 on 18/11/17.

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.theah64.hosteler.MainActivity"
+    tools:context="com.theah64.hosteler.activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
@@ -32,13 +32,13 @@
                 android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 android:padding="8dp"
-                android:weightSum="100">
+                android:weightSum="3">
 
                 <!--Breakfast only-->
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="25"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/breakfast_only"
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/breakfast_only"
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="25"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/dinner_only"
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/dinner_only"
@@ -56,20 +56,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="25"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/both"
                     android:drawablePadding="5dp"
                     android:drawableStart="@drawable/both"
                     android:text="@string/BOTH" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="25"
-                    android:drawableLeft="@drawable/complex"
-                    android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/complex"
-                    android:text="@string/BOTH" />
 
             </LinearLayout>
 

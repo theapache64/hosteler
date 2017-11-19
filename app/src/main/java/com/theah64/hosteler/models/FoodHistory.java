@@ -1,5 +1,10 @@
 package com.theah64.hosteler.models;
 
+import android.database.Cursor;
+
+import com.theah64.hosteler.database.CustomCursor;
+import com.theah64.hosteler.database.FoodHistories;
+
 /**
  * Created by theapache64 on 16/11/17.
  */
@@ -100,5 +105,22 @@ public class FoodHistory {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static FoodHistory parseFromCursor(Cursor cursor) {
+
+        final CustomCursor customCursor = new CustomCursor(cursor);
+        final String id = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_ID);
+        final String date = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_DATE);
+        final String description = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_DESCRIPTION);
+        final int breakfast = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_BREAKFAST);
+        final int dinner = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_DINNER);
+        final int guestBreakfast = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_GUEST_BREAKFAST);
+        final int guestDinner = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_GUEST_DINNER);
+        final int additionalCharge = customCursor.getIntByColumnIndex(FoodHistories.COLUMN_ADDITIONAL_CHARGE);
+        final String createdAt = customCursor.getStringByColumnIndex(FoodHistories.COLUMN_CREATED_AT);
+
+        return new FoodHistory(id, date, description, breakfast, dinner, guestBreakfast, guestDinner, additionalCharge, createdAt);
+
     }
 }
