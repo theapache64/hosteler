@@ -44,6 +44,11 @@ public class MainActivity extends BaseAppCompatActivity {
     @BindView(R.id.tvAmount)
     TextView tvAmount;
 
+
+    private CaldroidFragment caldroidFragment;
+    private SharedPreferences pref;
+    private LayoutInflater inflater;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +59,11 @@ public class MainActivity extends BaseAppCompatActivity {
         setSupportActionBar(toolbar);
 
         foodHistoriesTable = FoodHistories.getInstance(this);
-        final LayoutInflater inflater = LayoutInflater.from(this);
-        final SharedPreferences pref = PreferenceManager
+        inflater = LayoutInflater.from(this);
+        pref = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
-        final CaldroidFragment caldroidFragment = new CaldroidFragment();
+        caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
         args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
         caldroidFragment.setMaxDate(new Date());
@@ -66,7 +71,7 @@ public class MainActivity extends BaseAppCompatActivity {
         //Setting background colors for dates
         final List<FoodHistory> foodHistories = foodHistoriesTable.getAll();
         for (FoodHistory foodHistory : foodHistories) {
-            setDateBackground(caldroidFragment, foodHistory);
+            setDateBackground(foodHistory);
         }
 
         caldroidFragment.setArguments(args);
@@ -75,172 +80,12 @@ public class MainActivity extends BaseAppCompatActivity {
             @Override
             public void onLongClickDate(final Date date, View view) {
                 //Ask additional charge and it's description
-
-                @SuppressLint("InflateParams") final View adChargeLayout = inflater.inflate(R.layout.additional_charge_layout, null, false);
-                final ValidTextInputLayout vtilAdditionalCharge = adChargeLayout.findViewById(R.id.vtilAdditionalCharge);
-                final ValidTextInputLayout vtilDescription = (ValidTextInputLayout) adChargeLayout.findViewById(R.id.vtilDescription);
-
-                //checking if there's data available
-                final String sDate = DateUtils.formatWithddMMyyyy(date);
-                final FoodHistory[] foodHistory = {foodHistoriesTable.get(FoodHistories.COLUMN_DATE, sDate)};
-
-                if (foodHistory[0] != null) {
-                    vtilAdditionalCharge.setText(String.valueOf(foodHistory[0].getAdditionalCharge()));
-                    vtilDescription.setText(foodHistory[0].getDescription());
-                }
-
-                new MaterialDialog.Builder(MainActivity.this)
-                        .title(DateUtils.getReadableDateFormat(date))
-                        .customView(adChargeLayout, true)
-                        .positiveText(R.string.ADD)
-                        .autoDismiss(false)
-                        .onAny(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                if (which == DialogAction.POSITIVE) {
-
-                                    if (!vtilAdditionalCharge.isMatch()) {
-                                        return;
-                                    }
-
-                                    //Submit additional charge here
-                                    final int additionalCharge = Integer.parseInt(vtilAdditionalCharge.getString());
-                                    final String c = vtilDescription.getString();
-
-
-                                    if (foodHistory[0] == null) {
-                                        foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null, false);
-                                        foodHistoriesTable.add(foodHistory[0]);
-                                    } else {
-                                        foodHistory[0].setAdditionalCharge(additionalCharge);
-                                        foodHistory[0].setDescription(vtilDescription.getString());
-                                        foodHistoriesTable.update(foodHistory[0]);
-                                    }
-
-
-                                    updatePrice();
-                                    dialog.dismiss();
-                                }
-                            }
-                        })
-                        .build()
-                        .show();
+                showAdditionalCharge(date);
             }
 
             @Override
             public void onSelectDate(Date date, View view) {
-
-                final String clickedDate = DateUtils.formatWithddMMyyyy(date);
-                FoodHistory foodHistory = foodHistoriesTable.get(FoodHistories.COLUMN_DATE, clickedDate);
-
-                final List<Integer> selectedIndices = new ArrayList<>();
-
-                if (foodHistory == null) {
-                    foodHistory = new FoodHistory(null, clickedDate, null, 0, 0, 0, 0, 0, null, false);
-                }
-
-                //Convert to list
-                final List<String> foodTypeList = new ArrayList<String>();
-                foodTypeList.addAll(Arrays.asList(getResources().getStringArray(R.array.food_types)));
-
-                if (foodHistory.getBreakfast() > 0) {
-                    selectedIndices.add(foodTypeList.indexOf(getString(R.string.Breakfast)));
-                }
-
-                if (foodHistory.getDinner() > 0) {
-                    selectedIndices.add(foodTypeList.indexOf(getString(R.string.Dinner)));
-                }
-
-                if (foodHistory.getGuestBreakfast() > 0) {
-                    selectedIndices.add(foodTypeList.indexOf(getString(R.string.Guest_Breakfast)));
-                }
-
-                if (foodHistory.getGuestDinner() > 0) {
-                    selectedIndices.add(foodTypeList.indexOf(getString(R.string.Guest_Dinner)));
-                }
-
-
-                final FoodHistory finalFoodHistory = foodHistory;
-                new MaterialDialog.Builder(MainActivity.this)
-                        .title(DateUtils.getReadableDateFormat(date) + (foodHistory.getAdditionalCharge() > 0 ? "*" : ""))
-                        .items(R.array.food_types)
-                        .itemsCallbackMultiChoice(selectedIndices.toArray(new Integer[selectedIndices.size()]), new MaterialDialog.ListCallbackMultiChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                /**
-                                 * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
-                                 * returning false here won't allow the newly selected check box to actually be selected
-                                 * (or the newly unselected check box to be unchecked).
-                                 * See the limited multi choice dialog example in the sample project for details.
-                                 **/
-
-                                return true;
-                            }
-                        })
-                        .positiveText(R.string.DONE)
-                        .onAny(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                if (which == DialogAction.POSITIVE) {
-
-                                    if (dialog.getSelectedIndices() != null) {
-
-                                        final int breakFastCharge = Integer.parseInt(pref.getString(getString(R.string.breakfast_charge), getString(R.string.default_breakfast_cost)));
-                                        final int dinnerCharge = Integer.parseInt(pref.getString(getString(R.string.dinner_charge), getString(R.string.default_dinner_cost)));
-                                        final int totalHostelers = Integer.parseInt(pref.getString(getString(R.string.total_hostelers), getString(R.string.default_total_hostelers)));
-                                        final int guestBreakfastCharge = breakFastCharge / totalHostelers;
-                                        final int guestDinnerCharge = dinnerCharge / totalHostelers;
-
-                                        List<Integer> selectedIndices = Arrays.asList(dialog.getSelectedIndices());
-
-                                        //Looping through all 4 indices
-                                        for (int i = 0; i < 4; i++) {
-
-                                            if (selectedIndices.contains(i)) {
-                                                if (i == foodTypeList.indexOf(getString(R.string.Breakfast))) {
-                                                    finalFoodHistory.setBreakfast(breakFastCharge);
-                                                } else if (i == foodTypeList.indexOf(getString(R.string.Dinner))) {
-                                                    finalFoodHistory.setDinner(dinnerCharge);
-                                                } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Breakfast))) {
-                                                    finalFoodHistory.setGuestBreakfast(guestBreakfastCharge);
-                                                } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Dinner))) {
-                                                    finalFoodHistory.setGuestDinner(guestDinnerCharge);
-                                                }
-                                            } else {
-                                                if (i == foodTypeList.indexOf(getString(R.string.Breakfast))) {
-                                                    finalFoodHistory.setBreakfast(0);
-                                                } else if (i == foodTypeList.indexOf(getString(R.string.Dinner))) {
-                                                    finalFoodHistory.setDinner(0);
-                                                } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Breakfast))) {
-                                                    finalFoodHistory.setGuestBreakfast(0);
-                                                } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Dinner))) {
-                                                    finalFoodHistory.setGuestDinner(0);
-                                                }
-                                            }
-                                        }
-
-                                        if (finalFoodHistory.getId() == null) {
-                                            //insert
-                                            foodHistoriesTable.add(finalFoodHistory);
-                                        } else {
-                                            //update
-                                            foodHistoriesTable.update(finalFoodHistory);
-                                        }
-
-                                        //Update calendar background
-                                        setDateBackground(caldroidFragment, finalFoodHistory);
-                                        caldroidFragment.refreshView();
-
-                                        updatePrice();
-                                    }
-
-                                }
-                            }
-                        })
-                        .show();
-
-                System.out.println(foodHistory);
-
+                showPrimaryChooser(date);
             }
         });
 
@@ -252,7 +97,172 @@ public class MainActivity extends BaseAppCompatActivity {
 
     }
 
-    private void setDateBackground(CaldroidFragment caldroidFragment, FoodHistory foodHistory) {
+    private void showPrimaryChooser(Date date) {
+        final String clickedDate = DateUtils.formatWithddMMyyyy(date);
+        FoodHistory foodHistory = foodHistoriesTable.get(FoodHistories.COLUMN_DATE, clickedDate);
+
+        final List<Integer> selectedIndices = new ArrayList<>();
+
+        if (foodHistory == null) {
+            foodHistory = new FoodHistory(null, clickedDate, null, 0, 0, 0, 0, 0, null, false);
+        }
+
+        //Convert to list
+        final List<String> foodTypeList = new ArrayList<String>();
+        foodTypeList.addAll(Arrays.asList(getResources().getStringArray(R.array.food_types)));
+
+        if (foodHistory.getBreakfast() > 0) {
+            selectedIndices.add(foodTypeList.indexOf(getString(R.string.Breakfast)));
+        }
+
+        if (foodHistory.getDinner() > 0) {
+            selectedIndices.add(foodTypeList.indexOf(getString(R.string.Dinner)));
+        }
+
+        if (foodHistory.getGuestBreakfast() > 0) {
+            selectedIndices.add(foodTypeList.indexOf(getString(R.string.Guest_Breakfast)));
+        }
+
+        if (foodHistory.getGuestDinner() > 0) {
+            selectedIndices.add(foodTypeList.indexOf(getString(R.string.Guest_Dinner)));
+        }
+
+
+        final FoodHistory finalFoodHistory = foodHistory;
+        new MaterialDialog.Builder(MainActivity.this)
+                .title(DateUtils.getReadableDateFormat(date) + (foodHistory.getAdditionalCharge() > 0 ? "*" : ""))
+                .items(R.array.food_types)
+                .itemsCallbackMultiChoice(selectedIndices.toArray(new Integer[selectedIndices.size()]), new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        /**
+                         * If you use alwaysCallMultiChoiceCallback(), which is discussed below,
+                         * returning false here won't allow the newly selected check box to actually be selected
+                         * (or the newly unselected check box to be unchecked).
+                         * See the limited multi choice dialog example in the sample project for details.
+                         **/
+
+                        return true;
+                    }
+                })
+                .positiveText(R.string.DONE)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (which == DialogAction.POSITIVE) {
+
+                            if (dialog.getSelectedIndices() != null) {
+
+                                final int breakFastCharge = Integer.parseInt(pref.getString(getString(R.string.breakfast_charge), getString(R.string.default_breakfast_cost)));
+                                final int dinnerCharge = Integer.parseInt(pref.getString(getString(R.string.dinner_charge), getString(R.string.default_dinner_cost)));
+                                final int totalHostelers = Integer.parseInt(pref.getString(getString(R.string.total_hostelers), getString(R.string.default_total_hostelers)));
+                                final int guestBreakfastCharge = breakFastCharge / totalHostelers;
+                                final int guestDinnerCharge = dinnerCharge / totalHostelers;
+
+                                List<Integer> selectedIndices = Arrays.asList(dialog.getSelectedIndices());
+
+                                //Looping through all 4 indices
+                                for (int i = 0; i < 4; i++) {
+
+                                    if (selectedIndices.contains(i)) {
+                                        if (i == foodTypeList.indexOf(getString(R.string.Breakfast))) {
+                                            finalFoodHistory.setBreakfast(breakFastCharge);
+                                        } else if (i == foodTypeList.indexOf(getString(R.string.Dinner))) {
+                                            finalFoodHistory.setDinner(dinnerCharge);
+                                        } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Breakfast))) {
+                                            finalFoodHistory.setGuestBreakfast(guestBreakfastCharge);
+                                        } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Dinner))) {
+                                            finalFoodHistory.setGuestDinner(guestDinnerCharge);
+                                        }
+                                    } else {
+                                        if (i == foodTypeList.indexOf(getString(R.string.Breakfast))) {
+                                            finalFoodHistory.setBreakfast(0);
+                                        } else if (i == foodTypeList.indexOf(getString(R.string.Dinner))) {
+                                            finalFoodHistory.setDinner(0);
+                                        } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Breakfast))) {
+                                            finalFoodHistory.setGuestBreakfast(0);
+                                        } else if (i == foodTypeList.indexOf(getString(R.string.Guest_Dinner))) {
+                                            finalFoodHistory.setGuestDinner(0);
+                                        }
+                                    }
+                                }
+
+                                if (finalFoodHistory.getId() == null) {
+                                    //insert
+                                    foodHistoriesTable.add(finalFoodHistory);
+                                } else {
+                                    //update
+                                    foodHistoriesTable.update(finalFoodHistory);
+                                }
+
+                                //Update calendar background
+                                setDateBackground(finalFoodHistory);
+                                caldroidFragment.refreshView();
+
+                                updatePrice();
+                            }
+
+                        }
+                    }
+                })
+                .show();
+
+        System.out.println(foodHistory);
+    }
+
+    private void showAdditionalCharge(Date date) {
+        @SuppressLint("InflateParams") final View adChargeLayout = inflater.inflate(R.layout.additional_charge_layout, null, false);
+        final ValidTextInputLayout vtilAdditionalCharge = adChargeLayout.findViewById(R.id.vtilAdditionalCharge);
+        final ValidTextInputLayout vtilDescription = (ValidTextInputLayout) adChargeLayout.findViewById(R.id.vtilDescription);
+
+        //checking if there's data available
+        final String sDate = DateUtils.formatWithddMMyyyy(date);
+        final FoodHistory[] foodHistory = {foodHistoriesTable.get(FoodHistories.COLUMN_DATE, sDate)};
+
+        if (foodHistory[0] != null) {
+            vtilAdditionalCharge.setText(String.valueOf(foodHistory[0].getAdditionalCharge()));
+            vtilDescription.setText(foodHistory[0].getDescription());
+        }
+
+        new MaterialDialog.Builder(MainActivity.this)
+                .title(DateUtils.getReadableDateFormat(date))
+                .customView(adChargeLayout, true)
+                .positiveText(R.string.ADD)
+                .autoDismiss(false)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (which == DialogAction.POSITIVE) {
+
+                            if (!vtilAdditionalCharge.isMatch()) {
+                                return;
+                            }
+
+                            //Submit additional charge here
+                            final int additionalCharge = Integer.parseInt(vtilAdditionalCharge.getString());
+                            final String c = vtilDescription.getString();
+
+
+                            if (foodHistory[0] == null) {
+                                foodHistory[0] = new FoodHistory(null, sDate, vtilDescription.getString(), 0, 0, 0, 0, additionalCharge, null, false);
+                                foodHistoriesTable.add(foodHistory[0]);
+                            } else {
+                                foodHistory[0].setAdditionalCharge(additionalCharge);
+                                foodHistory[0].setDescription(vtilDescription.getString());
+                                foodHistoriesTable.update(foodHistory[0]);
+                            }
+
+
+                            updatePrice();
+                            dialog.dismiss();
+                        }
+                    }
+                })
+                .build()
+                .show();
+    }
+
+    private void setDateBackground(FoodHistory foodHistory) {
 
         final Date date = DateUtils.parseWithddMMyyyy(foodHistory.getDate());
 
