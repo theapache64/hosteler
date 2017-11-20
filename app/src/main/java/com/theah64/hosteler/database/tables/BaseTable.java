@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-
 import com.theah64.hosteler.utils.FileUtils;
 
 import java.io.IOException;
