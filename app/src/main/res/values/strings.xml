@@ -45,4 +45,8 @@
     <string name="Do_you_really_want_to_proceed_with_the_payment">Do you really want to proceed with the payment ?</string>
     <string name="Payment_cancelled">Payment cancelled</string>
     <string name="Amount_cant_be_zero">Amount can\'t be zero</string>
+    <string name="title_activity_payment_histories">PaymentHistoriesActivity</string>
+    <string name="Payment_date">Payment date</string>
+    <string name="Amount">Amount</string>
+    <string name="Payment_Histories">Payment Histories</string>
 </resources>

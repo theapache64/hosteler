@@ -38,7 +38,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -360,6 +359,10 @@ public class MainActivity extends BaseAppCompatActivity {
                 startActivity(new Intent(this, SettingsPrefActivity.class));
                 break;
 
+            case R.id.miPaymentHistory:
+                startActivityForResult(new Intent(this, PaymentHistoriesActivity.class), PaymentHistoriesActivity.RQ_CODE);
+                break;
+
             case R.id.miPaymentTime:
                 onPaymentTimeClicked();
                 break;
@@ -380,6 +383,11 @@ public class MainActivity extends BaseAppCompatActivity {
         if (requestCode == PaymentTimeActivity.RQ_CODE_PAYMENT_TIME && resultCode == RESULT_OK) {
             updatePrice();
             Toast.makeText(this, "Amount updated!", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == PaymentHistoriesActivity.RQ_CODE && resultCode == RESULT_OK) {
+            //Some payment deleted so better refresh the calendar
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }

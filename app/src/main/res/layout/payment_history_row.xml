@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+            <!--Amount-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="40"
+                    android:text="@string/Amount"
+                    android:textColor="@color/grey_800"
+                    android:textSize="16sp" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/itvAmount"
+                    fontPath="fonts/Lato-Bold.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="55"
+                    android:gravity="end"
+                    android:text="2000"
+                    android:textColor="@color/grey_900"
+                    android:textSize="17sp"
+                    tools:ignore="MissingPrefix" />
+
+
+            </LinearLayout>
+
+            <!--Payment Date-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="40"
+                    android:text="@string/Payment_date"
+                    android:textColor="@color/grey_800"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tvPaymentDate"
+                    fontPath="fonts/Lato-Bold.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="55"
+                    android:gravity="end"
+                    android:text="2000"
+                    android:textColor="@color/grey_900"
+                    android:textSize="17sp"
+                    tools:ignore="MissingPrefix" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/itvDeletePayment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="{fa-trash}" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_200" />
+
+</LinearLayout>

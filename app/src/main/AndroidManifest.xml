@@ -27,6 +27,12 @@
             android:name=".activities.PaymentTimeActivity"
             android:label="@string/Payment_Time"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".activities.PaymentHistoriesActivity"
+            android:label="@string/Payment_Histories"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

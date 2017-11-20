@@ -8,6 +8,9 @@ import android.database.Cursor;
 import com.theah64.hosteler.database.CustomCursor;
 import com.theah64.hosteler.models.PaymentHistory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by theapache64 on 19/11/17.
  */
@@ -51,19 +54,34 @@ public class PaymentHistories extends BaseTable<PaymentHistory> {
         final String query = "SELECT ph.id, ph._date,ph.amount_paid, ph.pending_amount, ph.advance_amount,ph.created_at FROM payment_histories ph ORDER BY ph.id DESC LIMIT 1";
         final Cursor cursor = getReadableDatabase().rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            final CustomCursor customCursor = new CustomCursor(cursor);
-            final String id = customCursor.getStringByColumnIndex(COLUMN_ID);
-            final String date = customCursor.getStringByColumnIndex(COLUMN_DATE);
-            final long amountPaid = customCursor.getLongByColumnIndex(COLUMN_AMOUNT_PAID);
-            final long pendingAmount = customCursor.getLongByColumnIndex(COLUMN_PENDING_AMOUNT);
-            final long advanceAmount = customCursor.getLongByColumnIndex(COLUMN_ADVANCE_AMOUNT);
-            final String createdAt = customCursor.getStringByColumnIndex(COLUMN_CREATED_AT);
-
-            paymentHistory = new PaymentHistory(id, amountPaid, advanceAmount, pendingAmount, date, createdAt);
+            paymentHistory = getPaymentHistory(cursor);
         }
         cursor.close();
         return paymentHistory;
     }
 
+    private PaymentHistory getPaymentHistory(Cursor cursor) {
+        final CustomCursor customCursor = new CustomCursor(cursor);
+        final String id = customCursor.getStringByColumnIndex(COLUMN_ID);
+        final String date = customCursor.getStringByColumnIndex(COLUMN_DATE);
+        final long amountPaid = customCursor.getLongByColumnIndex(COLUMN_AMOUNT_PAID);
+        final long pendingAmount = customCursor.getLongByColumnIndex(COLUMN_PENDING_AMOUNT);
+        final long advanceAmount = customCursor.getLongByColumnIndex(COLUMN_ADVANCE_AMOUNT);
+        final String createdAt = customCursor.getStringByColumnIndex(COLUMN_CREATED_AT);
+        return new PaymentHistory(id, amountPaid, advanceAmount, pendingAmount, date, createdAt);
+    }
 
+    @Override
+    public List<PaymentHistory> getAll() {
+        final List<PaymentHistory> paymentHistories = new ArrayList<>();
+        final String query = "SELECT ph.id, ph._date,ph.amount_paid, ph.pending_amount, ph.advance_amount,ph.created_at FROM payment_histories ph ORDER BY ph.id DESC";
+        final Cursor cursor = getReadableDatabase().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                paymentHistories.add(getPaymentHistory(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return paymentHistories;
+    }
 }

@@ -2,7 +2,6 @@ package com.theah64.hosteler.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +23,7 @@ import com.theah64.hosteler.database.tables.PaymentHistories;
 import com.theah64.hosteler.models.Bill;
 import com.theah64.hosteler.models.PaymentHistory;
 import com.theah64.hosteler.utils.DateUtils;
+import com.theah64.hosteler.utils.RupeeUtils;
 import com.theah64.hosteler.widgets.ValidTextInputLayout;
 
 import java.util.Date;
@@ -99,7 +99,6 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
     Button bPay;
 
 
-    private static final String PRIMARY_AMOUNT_FORMAT = "{fa-rupee 17sp @color/grey_400} %s";
     private long grandTotal;
     private FoodHistories foodHistoriesTable;
     private PaymentHistories paymentHistoriesTable;
@@ -139,18 +138,18 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
         tvGuestBreakfastCount.setText("x" + bill.getGuestBreakfastCount());
         tvGuestDinnerCount.setText("x" + bill.getGuestDinnerCount());
 
-        setRupeeText(tvTotalBreakfastCost, bill.getTotalBreakfastCost());
-        setRupeeText(tvTotalDinnerCost, bill.getTotalDinnerCost());
-        setRupeeText(tvTotalGuestBreakfastCost, bill.getTotalGuestBreakfastCost());
-        setRupeeText(tvTotalGuestDinnerCost, bill.getTotalGuestDinnerCost());
-        setRupeeText(tvTotalAdditionalCharge, bill.getTotalAdditionalCharge());
+        RupeeUtils.setRupeeText(tvTotalBreakfastCost, bill.getTotalBreakfastCost());
+        RupeeUtils.setRupeeText(tvTotalDinnerCost, bill.getTotalDinnerCost());
+        RupeeUtils.setRupeeText(tvTotalGuestBreakfastCost, bill.getTotalGuestBreakfastCost());
+        RupeeUtils.setRupeeText(tvTotalGuestDinnerCost, bill.getTotalGuestDinnerCost());
+        RupeeUtils.setRupeeText(tvTotalAdditionalCharge, bill.getTotalAdditionalCharge());
 
 
-        setRupeeText(tvPendingAmount, pendingAmount);
-        setRupeeText(tvAdvanceAmount, advanceAmount);
-        setRupeeText(tvGrandTotal, grandTotal);
-        setRupeeText(tvNewAdvanceAmount, 0);
-        setRupeeText(tvNewPendingAmount, 0);
+        RupeeUtils.setRupeeText(tvPendingAmount, pendingAmount);
+        RupeeUtils.setRupeeText(tvAdvanceAmount, advanceAmount);
+        RupeeUtils.setRupeeText(tvGrandTotal, grandTotal);
+        RupeeUtils.setRupeeText(tvNewAdvanceAmount, 0);
+        RupeeUtils.setRupeeText(tvNewPendingAmount, 0);
 
         //Hiding unnes field
         llPendingAmount.setVisibility(pendingAmount > 0 ? View.VISIBLE : View.GONE);
@@ -173,8 +172,8 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
 
                     long diff = grandTotal - amount;
 
-                    setRupeeText(tvNewAdvanceAmount, Math.abs(diff));
-                    setRupeeText(tvNewPendingAmount, diff);
+                    RupeeUtils.setRupeeText(tvNewAdvanceAmount, Math.abs(diff));
+                    RupeeUtils.setRupeeText(tvNewPendingAmount, diff);
 
                     llNewPendingAmount.setVisibility(diff > 0 ? View.VISIBLE : View.GONE);
                     llNewAdvanceAmount.setVisibility(diff < 0 ? View.VISIBLE : View.GONE);
@@ -189,10 +188,6 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
 
             }
         });
-    }
-
-    private void setRupeeText(IconTextView itv, long cost) {
-        itv.setText(String.format(PRIMARY_AMOUNT_FORMAT, cost));
     }
 
 
