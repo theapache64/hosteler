@@ -49,4 +49,6 @@
     <string name="Payment_date">Payment date</string>
     <string name="Amount">Amount</string>
     <string name="Payment_Histories">Payment Histories</string>
+    <string name="Breakfast_added">Breakfast added</string>
+    <string name="Dinner_added">Dinner added</string>
 </resources>

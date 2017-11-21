@@ -29,6 +29,7 @@ import com.theah64.hosteler.database.tables.FoodHistories;
 import com.theah64.hosteler.database.tables.PaymentHistories;
 import com.theah64.hosteler.models.FoodHistory;
 import com.theah64.hosteler.models.PaymentHistory;
+import com.theah64.hosteler.receivers.LazyModeReceivers;
 import com.theah64.hosteler.utils.DateUtils;
 import com.theah64.hosteler.widgets.ValidTextInputLayout;
 
@@ -107,6 +108,10 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void showPrimaryChooser(Date date) {
+
+        final Intent lazyIntent = new Intent(this, LazyModeReceivers.class);
+        lazyIntent.putExtra(LazyModeReceivers.KEY_LAZY_MODE_TYPE, LazyModeReceivers.TYPE_LAZY_BREAKFAST);
+        sendBroadcast(lazyIntent);
 
         final String clickedDate = DateUtils.formatWithddMMyyyy(date);
         FoodHistory foodHistory = foodHistoriesTable.get(FoodHistories.COLUMN_DATE, clickedDate);
