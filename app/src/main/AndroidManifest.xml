@@ -27,12 +27,15 @@
             android:name=".activities.PaymentTimeActivity"
             android:label="@string/Payment_Time"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activities.PaymentHistoriesActivity"
             android:label="@string/Payment_Histories"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <receiver
+            android:name=".receivers.LazyModeReceivers"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>
