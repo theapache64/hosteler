@@ -109,10 +109,6 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void showPrimaryChooser(Date date) {
 
-        final Intent lazyIntent = new Intent(this, LazyModeReceivers.class);
-        lazyIntent.putExtra(LazyModeReceivers.KEY_LAZY_MODE_TYPE, LazyModeReceivers.TYPE_LAZY_BREAKFAST);
-        sendBroadcast(lazyIntent);
-
         final String clickedDate = DateUtils.formatWithddMMyyyy(date);
         FoodHistory foodHistory = foodHistoriesTable.get(FoodHistories.COLUMN_DATE, clickedDate);
 

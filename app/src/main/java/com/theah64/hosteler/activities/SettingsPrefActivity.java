@@ -1,13 +1,20 @@
 package com.theah64.hosteler.activities;
 
+import android.app.AlarmManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.theah64.hosteler.R;
+import com.theah64.hosteler.receivers.LazyModeReceivers;
+import com.theah64.hosteler.utils.LazyMode;
 
 /**
  * Created by theapache64 on 18/11/17.
@@ -31,6 +38,36 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_main);
+
+            final AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+            final CheckBoxPreference cbfLazyMode = (CheckBoxPreference) findPreference(getString(R.string.lazy_mode));
+            cbfLazyMode.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    final boolean isLazyMode = Boolean.parseBoolean(o.toString());
+
+
+                    if (isLazyMode) {
+
+                        LazyMode.activate(preference.getContext(), am);
+
+                        //Lazy mode should be activated
+                        Toast.makeText(getActivity(), getString(R.string.Lazy_mode_activated), Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        LazyMode.deactivate(preference.getContext(), am);
+
+                        //Lazy mode should be deactivated
+                        Toast.makeText(getActivity(), getString(R.string.Lazy_mode_deactivated), Toast.LENGTH_SHORT).show();
+                    }
+
+                    return true;
+                }
+            });
+
+            //bindPreferenceSummaryToValue());
 
             /*// gallery EditText change listener
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_gallery_name)));
@@ -75,7 +112,12 @@ public class SettingsPrefActivity extends AppCompatPreferenceActivity {
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             String stringValue = newValue.toString();
 
-            if (preference instanceof ListPreference) {
+            Toast.makeText(preference.getContext(), stringValue, Toast.LENGTH_SHORT).show();
+
+            if (preference instanceof CheckBoxPreference) {
+
+
+
                 /*// For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;

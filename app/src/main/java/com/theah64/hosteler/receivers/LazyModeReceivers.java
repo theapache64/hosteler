@@ -22,8 +22,10 @@ import java.util.Date;
 public class LazyModeReceivers extends BroadcastReceiver {
 
     public static final String TYPE_LAZY_BREAKFAST = "lazy_breakfast";
-    private static final String TYPE_LAZY_DINNER = "lazy_dinner";
+    public static final String TYPE_LAZY_DINNER = "lazy_dinner";
     public static final String KEY_LAZY_MODE_TYPE = "lazy_mode_type";
+    public static final int RQ_CODE_BREAKFAST = 1;
+    public static final int RQ_CODE_DINNER = 2;
 
     @Override
     public void onReceive(Context context, Intent intent) {

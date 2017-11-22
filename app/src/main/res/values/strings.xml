@@ -51,4 +51,6 @@
     <string name="Payment_Histories">Payment Histories</string>
     <string name="Breakfast_added">Breakfast added</string>
     <string name="Dinner_added">Dinner added</string>
+    <string name="Lazy_mode_activated">Lazy mode activated</string>
+    <string name="Lazy_mode_deactivated">Lazy mode deactivated</string>
 </resources>
