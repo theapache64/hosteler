@@ -26,16 +26,21 @@ public class LazyMode {
 
         //Setting time
         final Calendar breakfastTime = Calendar.getInstance();
-        breakfastTime.set(Calendar.DAY_OF_YEAR, 1);
         breakfastTime.set(Calendar.HOUR_OF_DAY, 9);
         breakfastTime.set(Calendar.MINUTE, 0);
         breakfastTime.set(Calendar.SECOND, 0);
 
+        System.out.println("BTIme: "+ breakfastTime.getTime().toString());
+
+
         final Calendar dinnerTime = Calendar.getInstance();
-        breakfastTime.set(Calendar.DAY_OF_YEAR, 1);
         dinnerTime.set(Calendar.HOUR_OF_DAY, 21);
         dinnerTime.set(Calendar.MINUTE, 0);
         dinnerTime.set(Calendar.SECOND, 0);
+
+        System.out.println("DTIme: "+ dinnerTime
+                .getTime().toString());
+
 
         PendingIntent breakfastPendingIntent = PendingIntent.getBroadcast(context, LazyModeReceivers.RQ_CODE_BREAKFAST, breakfastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         am.setRepeating(AlarmManager.RTC_WAKEUP, breakfastTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, breakfastPendingIntent);
