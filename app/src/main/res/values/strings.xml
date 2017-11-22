@@ -53,4 +53,11 @@
     <string name="Dinner_added">Dinner added</string>
     <string name="Lazy_mode_activated">Lazy mode activated</string>
     <string name="Lazy_mode_deactivated">Lazy mode deactivated</string>
+    <string name="Delete">Delete</string>
+    <string name="Do_you_reall_want_to_delete_this_payment">Do you really want to delete this payment?</string>
+    <string name="YES">YES</string>
+    <string name="CANCEL">CANCEL</string>
+    <string name="No_history_found">No history found</string>
+    <string name="Amount_updated">Amount updated!</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

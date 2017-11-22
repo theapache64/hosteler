@@ -29,7 +29,6 @@ import com.theah64.hosteler.database.tables.FoodHistories;
 import com.theah64.hosteler.database.tables.PaymentHistories;
 import com.theah64.hosteler.models.FoodHistory;
 import com.theah64.hosteler.models.PaymentHistory;
-import com.theah64.hosteler.receivers.LazyModeReceivers;
 import com.theah64.hosteler.utils.DateUtils;
 import com.theah64.hosteler.widgets.ValidTextInputLayout;
 
@@ -383,10 +382,11 @@ public class MainActivity extends BaseAppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PaymentTimeActivity.RQ_CODE_PAYMENT_TIME && resultCode == RESULT_OK) {
             updatePrice();
-            Toast.makeText(this, "Amount updated!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.Amount_updated, Toast.LENGTH_SHORT).show();
         } else if (requestCode == PaymentHistoriesActivity.RQ_CODE && resultCode == RESULT_OK) {
             //Some payment deleted so better refresh the calendar
-            Intent intent = getIntent();
+            Toast.makeText(this, R.string.Amount_updated, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
             finish();
             startActivity(intent);
         } else {

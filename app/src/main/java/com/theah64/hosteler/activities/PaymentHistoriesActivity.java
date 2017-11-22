@@ -1,12 +1,15 @@
 package com.theah64.hosteler.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.theah64.hosteler.R;
 import com.theah64.hosteler.adapters.PaymentHistoriesAdapter;
 import com.theah64.hosteler.database.tables.FoodHistories;
@@ -35,7 +38,7 @@ public class PaymentHistoriesActivity extends BaseAppCompatActivity implements P
 
         paymentHistories = PaymentHistories.getInstance(this).getAll();
         if (paymentHistories.isEmpty()) {
-            Toast.makeText(this, "No history found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.No_history_found, Toast.LENGTH_SHORT).show();
             finish();
         }
         rvPaymentHistories.setLayoutManager(new LinearLayoutManager(this));
@@ -54,14 +57,37 @@ public class PaymentHistoriesActivity extends BaseAppCompatActivity implements P
     }
 
     @Override
-    public void onDeletePaymentHistory(int position) {
-        final PaymentHistory paymentHistory = paymentHistories.get(position);
+    public void onDeletePaymentHistory(final int position) {
 
-        //Removing connection
-        FoodHistories.getInstance(this).update(FoodHistories.COLUMN_PAYMENT_HISTORY_ID, paymentHistory.getId(), FoodHistories.COLUMN_PAYMENT_HISTORY_ID, null);
-        PaymentHistories.getInstance(this).delete(PaymentHistories.COLUMN_ID, paymentHistory.getId());
+        new MaterialDialog.Builder(this)
+                .title(R.string.Delete)
+                .content(R.string.Do_you_reall_want_to_delete_this_payment)
+                .positiveText(R.string.YES)
+                .negativeText(R.string.CANCEL)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if (which == DialogAction.POSITIVE) {
 
-        paymentHistories.remove(position);
-        adapter.notifyItemRemoved(position);
+                            final PaymentHistory paymentHistory = paymentHistories.get(position);
+
+                            //Removing connection
+                            FoodHistories.getInstance(PaymentHistoriesActivity.this).update(FoodHistories.COLUMN_PAYMENT_HISTORY_ID, paymentHistory.getId(), FoodHistories.COLUMN_PAYMENT_HISTORY_ID, null);
+                            PaymentHistories.getInstance(PaymentHistoriesActivity.this).delete(PaymentHistories.COLUMN_ID, paymentHistory.getId());
+
+                            paymentHistories.remove(position);
+                            adapter.notifyItemRemoved(position);
+                            setResult(RESULT_OK);
+
+                            if (paymentHistories.isEmpty()) {
+                                finish();
+                            }
+                        }
+                    }
+                })
+                .build()
+                .show();
+
+
     }
 }
