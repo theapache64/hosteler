@@ -1,14 +1,16 @@
 package com.theah64.hosteler.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,6 +44,16 @@ import butterknife.BindView;
 public class MainActivity extends BaseAppCompatActivity {
 
 
+    private static final String KEY_FILTER_BY = "filter_by";
+
+    public static final String FILTER_BY_BREAKFAST = FoodHistories.COLUMN_BREAKFAST;
+
+    public static final String FILTER_BY_DINNER = FoodHistories.COLUMN_DINNER;
+    public static final String FILTER_BY_GUEST_BREAKFAST = FoodHistories.COLUMN_GUEST_BREAKFAST;
+    public static final String FILTER_BY_GUEST_DINNER = FoodHistories.COLUMN_GUEST_DINNER;
+    public static final String FILTER_BY_ADDITIONAL_CHARGE = FoodHistories.COLUMN_ADDITIONAL_CHARGE;
+    public static final int RQ_CODE = 123;
+
     private FoodHistories foodHistoriesTable;
     private PaymentHistories paymentHistories;
 
@@ -54,6 +66,14 @@ public class MainActivity extends BaseAppCompatActivity {
     private CaldroidFragment caldroidFragment;
     private SharedPreferences pref;
     private LayoutInflater inflater;
+    private String filterBy;
+
+    @BindView(R.id.llPaymentDetails)
+    View llPaymentDetails;
+
+
+    @BindView(R.id.llHints)
+    View llHints;
 
 
     @Override
@@ -63,6 +83,21 @@ public class MainActivity extends BaseAppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        this.filterBy = getIntent().getStringExtra(KEY_FILTER_BY);
+
+        if (filterBy != null) {
+            final ActionBar actionBar = getSupportActionBar();
+            assert actionBar != null;
+            actionBar.setTitle(R.string.Filter_By);
+            actionBar.setSubtitle(filterBy.replace("_", " "));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            llHints.setVisibility(View.GONE);
+            llPaymentDetails.setVisibility(View.GONE);
+        } else {
+            llHints.setVisibility(View.VISIBLE);
+            llPaymentDetails.setVisibility(View.VISIBLE);
+        }
 
         foodHistoriesTable = FoodHistories.getInstance(this);
         paymentHistories = PaymentHistories.getInstance(this);
@@ -103,8 +138,8 @@ public class MainActivity extends BaseAppCompatActivity {
         t.commit();
 
         updatePrice();
-
     }
+
 
     private void showPrimaryChooser(Date date) {
 
@@ -217,6 +252,7 @@ public class MainActivity extends BaseAppCompatActivity {
                                     //update
                                     foodHistoriesTable.update(finalFoodHistory);
                                 }
+                                setResult(RESULT_OK);
 
                                 //Update calendar background
                                 setDateBackground(finalFoodHistory);
@@ -278,7 +314,7 @@ public class MainActivity extends BaseAppCompatActivity {
                                 foodHistory[0].setDescription(vtilDescription.getString());
                                 foodHistoriesTable.update(foodHistory[0]);
                             }
-
+                            setResult(RESULT_OK);
 
                             updatePrice();
                             dialog.dismiss();
@@ -291,25 +327,48 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private void setDateBackground(FoodHistory foodHistory) {
 
+        //filter by
         final Date date = DateUtils.parseWithddMMyyyy(foodHistory.getDate());
 
-        if (foodHistory.getBreakfast() > 0 || foodHistory.getDinner() > 0) {
-            int drawableId;
+        if (filterBy != null) {
 
-            if (foodHistory.getBreakfast() > 0 && foodHistory.getDinner() == 0) {
-                drawableId = R.drawable.breakfast_only;
-            } else if (foodHistory.getDinner() > 0 && foodHistory.getBreakfast() == 0) {
-                drawableId = R.drawable.dinner_only;
+            if (
+                    (filterBy.equals(FILTER_BY_BREAKFAST) && foodHistory.getBreakfast() > 0) ||
+                            (filterBy.equals(FILTER_BY_DINNER) && foodHistory.getDinner() > 0) ||
+                            (filterBy.equals(FILTER_BY_GUEST_BREAKFAST) && foodHistory.getGuestBreakfast() > 0) ||
+                            (filterBy.equals(FILTER_BY_GUEST_DINNER) && foodHistory.getGuestDinner() > 0) ||
+                            (filterBy.equals(FILTER_BY_ADDITIONAL_CHARGE) && foodHistory.getAdditionalCharge() > 0)
+                    ) {
+                caldroidFragment.setTextColorForDate(R.color.white, date);
+                caldroidFragment.setBackgroundDrawableForDate(ContextCompat.getDrawable(this, R.drawable.filtered), date);
             } else {
-                drawableId = R.drawable.both;
+                caldroidFragment.setTextColorForDate(R.color.grey_800, date);
+                caldroidFragment.clearBackgroundDrawableForDate(date);
             }
 
-            caldroidFragment.setTextColorForDate(R.color.white, date);
-            caldroidFragment.setBackgroundDrawableForDate(ContextCompat.getDrawable(this, drawableId), date);
         } else {
-            caldroidFragment.setTextColorForDate(R.color.grey_800, date);
-            caldroidFragment.clearBackgroundDrawableForDate(date);
+
+
+            if (foodHistory.getBreakfast() > 0 || foodHistory.getDinner() > 0) {
+                int drawableId;
+
+                if (foodHistory.getBreakfast() > 0 && foodHistory.getDinner() == 0) {
+                    drawableId = R.drawable.breakfast_only;
+                } else if (foodHistory.getDinner() > 0 && foodHistory.getBreakfast() == 0) {
+                    drawableId = R.drawable.dinner_only;
+                } else {
+                    drawableId = R.drawable.both;
+                }
+
+                caldroidFragment.setTextColorForDate(R.color.white, date);
+                caldroidFragment.setBackgroundDrawableForDate(ContextCompat.getDrawable(this, drawableId), date);
+            } else {
+                caldroidFragment.setTextColorForDate(R.color.grey_800, date);
+                caldroidFragment.clearBackgroundDrawableForDate(date);
+            }
+
         }
+
     }
 
 
@@ -333,16 +392,18 @@ public class MainActivity extends BaseAppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (filterBy == null) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        final MenuItem miSettings = menu.findItem(R.id.miSettings);
-        final MenuItem miPaymentHistory = menu.findItem(R.id.miPaymentHistory);
-        final MenuItem miPaymentTime = menu.findItem(R.id.miPaymentTime);
+            final MenuItem miSettings = menu.findItem(R.id.miSettings);
+            final MenuItem miPaymentHistory = menu.findItem(R.id.miPaymentHistory);
+            final MenuItem miPaymentTime = menu.findItem(R.id.miPaymentTime);
 
-        miSettings.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_cog).colorRes(android.R.color.white).sizeDp(22));
-        miPaymentHistory.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_history).colorRes(android.R.color.white).sizeDp(22));
-        miPaymentTime.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_money).colorRes(android.R.color.white).sizeDp(22));
+            miSettings.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_cog).colorRes(android.R.color.white).sizeDp(22));
+            miPaymentHistory.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_history).colorRes(android.R.color.white).sizeDp(22));
+            miPaymentTime.setIcon(new IconDrawable(this, FontAwesomeIcons.fa_money).colorRes(android.R.color.white).sizeDp(22));
+        }
 
         return true;
     }
@@ -355,6 +416,11 @@ public class MainActivity extends BaseAppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
+
+            case android.R.id.home:
+                finish();
+                break;
+
             case R.id.miSettings:
                 startActivity(new Intent(this, SettingsPrefActivity.class));
                 break;
@@ -366,12 +432,13 @@ public class MainActivity extends BaseAppCompatActivity {
             case R.id.miPaymentTime:
                 onPaymentTimeClicked();
                 break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     public void onPaymentTimeClicked() {
@@ -394,7 +461,9 @@ public class MainActivity extends BaseAppCompatActivity {
         }
     }
 
-    public static void start(Context context) {
-        context.startActivity(new Intent(context, MainActivity.class));
+    public static void start(Activity context, @Nullable String filterBy) {
+        final Intent main = new Intent(context, MainActivity.class);
+        main.putExtra(KEY_FILTER_BY, filterBy);
+        context.startActivityForResult(main, MainActivity.RQ_CODE);
     }
 }

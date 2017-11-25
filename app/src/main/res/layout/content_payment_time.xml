@@ -26,8 +26,12 @@
 
         <!--Breakfast-->
         <LinearLayout
+            android:id="@+id/llBreakfast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/trans_to_grey_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="8dp"
             android:weightSum="100">
@@ -78,8 +82,12 @@
 
         <!--Dinner-->
         <LinearLayout
+            android:id="@+id/llDinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/trans_to_grey_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="8dp"
             android:weightSum="100">
@@ -128,8 +136,12 @@
 
         <!--Guest breakfast-->
         <LinearLayout
+            android:id="@+id/llGuestBreakfast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/trans_to_grey_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="8dp"
             android:weightSum="100">
@@ -178,8 +190,12 @@
 
         <!--Guest dinner-->
         <LinearLayout
+            android:id="@+id/llGuestDinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/trans_to_grey_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="8dp"
             android:weightSum="100">
@@ -228,8 +244,12 @@
 
         <!--Additional charges-->
         <LinearLayout
+            android:id="@+id/llAdditionalCharge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/trans_to_grey_selector"
+            android:clickable="true"
+            android:focusable="true"
             android:orientation="horizontal"
             android:padding="8dp"
             android:weightSum="100">
@@ -237,7 +257,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
+                android:layout_weight="60"
                 android:text="@string/Additional_charge"
                 android:textColor="@color/grey_800"
                 android:textSize="16sp" />
@@ -248,7 +268,7 @@
                 fontPath="fonts/Lato-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="55"
+                android:layout_weight="35"
                 android:gravity="end"
                 android:text="2000"
                 android:textColor="@color/grey_900"
@@ -281,7 +301,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
+                android:layout_weight="60"
                 android:text="@string/Pending_Amount"
                 android:textColor="@color/grey_800"
                 android:textSize="16sp" />
@@ -292,7 +312,7 @@
                 fontPath="fonts/Lato-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="55"
+                android:layout_weight="35"
                 android:gravity="end"
                 android:text="2000"
                 android:textColor="@color/grey_900"
@@ -324,7 +344,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
+                android:layout_weight="60"
                 android:text="@string/Advance_Amount"
                 android:textColor="@color/grey_800"
                 android:textSize="16sp" />
@@ -335,7 +355,7 @@
                 fontPath="fonts/Lato-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="55"
+                android:layout_weight="35"
                 android:gravity="end"
                 android:text="2000"
                 android:textColor="@color/grey_900"
@@ -371,7 +391,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
+                android:layout_weight="60"
                 android:text="@string/Grand_Total"
                 android:textColor="@color/grey_800"
                 android:textSize="16sp" />
@@ -382,7 +402,7 @@
                 fontPath="fonts/Lato-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="55"
+                android:layout_weight="35"
                 android:gravity="end"
                 android:text="2000"
                 android:textColor="@color/grey_900"
@@ -410,7 +430,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="55"
+                android:layout_weight="60"
                 android:text="@string/New_pending_Amount"
                 android:textColor="@color/red_800"
                 android:textSize="16sp" />
@@ -421,7 +441,7 @@
                 fontPath="fonts/Lato-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
+                android:layout_weight="35"
                 android:gravity="end"
                 android:textColor="@color/red_900"
                 android:textSize="17sp"
@@ -442,7 +462,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="55"
+                android:layout_weight="60"
                 android:text="@string/New_advance_Amount"
                 android:textColor="@color/green_800"
                 android:textSize="16sp" />
@@ -452,7 +472,7 @@
                 fontPath="fonts/Lato-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="40"
+                android:layout_weight="35"
                 android:gravity="end"
                 android:textColor="@color/green_900"
                 android:textSize="17sp"

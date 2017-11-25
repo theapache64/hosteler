@@ -25,11 +25,11 @@ public class FoodHistories extends BaseTable<FoodHistory> {
     private static final String COLUMN_ID = "id";
     public static final String COLUMN_DATE = "_date";
     private static final String COLUMN_DESCRIPTION = "description";
-    private static final String COLUMN_BREAKFAST = "breakfast";
-    private static final String COLUMN_DINNER = "dinner";
-    private static final String COLUMN_GUEST_BREAKFAST = "guest_breakfast";
-    private static final String COLUMN_GUEST_DINNER = "guest_dinner";
-    private static final String COLUMN_ADDITIONAL_CHARGE = "additional_charge";
+    public static final String COLUMN_BREAKFAST = "breakfast";
+    public static final String COLUMN_DINNER = "dinner";
+    public static final String COLUMN_GUEST_BREAKFAST = "guest_breakfast";
+    public static final String COLUMN_GUEST_DINNER = "guest_dinner";
+    public static final String COLUMN_ADDITIONAL_CHARGE = "additional_charge";
     private static final String COLUMN_CREATED_AT = "created_at";
     public static final String COLUMN_PAYMENT_HISTORY_ID = "payment_history_id";
 

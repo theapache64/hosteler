@@ -1,7 +1,5 @@
 package com.theah64.hosteler.activities;
 
-import android.content.Intent;
-
 import com.theah64.hosteler.R;
 
 public class SplashActivity extends BaseSplashActivity {
@@ -18,7 +16,7 @@ public class SplashActivity extends BaseSplashActivity {
 
     @Override
     public void onSplashFinished() {
-        startActivity(new Intent(this, MainActivity.class));
+        MainActivity.start(this, null);
         finish();
     }
 

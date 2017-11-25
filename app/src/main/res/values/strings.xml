@@ -60,4 +60,5 @@
     <string name="No_history_found">No history found</string>
     <string name="Amount_updated">Amount updated!</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="Filter_By">Filter by</string>
 </resources>

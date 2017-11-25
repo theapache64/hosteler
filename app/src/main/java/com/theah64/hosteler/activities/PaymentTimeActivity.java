@@ -116,6 +116,21 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
         foodHistoriesTable = FoodHistories.getInstance(this);
         paymentHistoriesTable = PaymentHistories.getInstance(this);
 
+        updateUI();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MainActivity.RQ_CODE && resultCode == RESULT_OK) {
+            updateUI();
+            Toast.makeText(this, R.string.Amount_updated, Toast.LENGTH_SHORT).show();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void updateUI() {
+
         final Bill bill = foodHistoriesTable.getBill();
         final PaymentHistory lastPaymentHistory = paymentHistoriesTable.getLastPaymentHistory();
 
@@ -194,7 +209,7 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            MainActivity.start(this);
+            MainActivity.start(this, null);
             finish();
             return true;
         } else {
@@ -250,6 +265,33 @@ public class PaymentTimeActivity extends BaseAppCompatActivity {
                 Toast.makeText(this, R.string.Amount_cant_be_zero, Toast.LENGTH_SHORT).show();
             }
         }
+    }
 
+
+    //Sorting
+
+    @OnClick(R.id.llBreakfast)
+    public void onBreakfastClicked() {
+        MainActivity.start(this, MainActivity.FILTER_BY_BREAKFAST);
+    }
+
+    @OnClick(R.id.llDinner)
+    public void onDinnerClicked() {
+        MainActivity.start(this, MainActivity.FILTER_BY_DINNER);
+    }
+
+    @OnClick(R.id.llGuestBreakfast)
+    public void onGuestBreakfastClicked() {
+        MainActivity.start(this, MainActivity.FILTER_BY_GUEST_BREAKFAST);
+    }
+
+    @OnClick(R.id.llGuestDinner)
+    public void onGuestDinnerClicked() {
+        MainActivity.start(this, MainActivity.FILTER_BY_GUEST_DINNER);
+    }
+
+    @OnClick(R.id.llAdditionalCharge)
+    public void onAdditionalChargeClicked() {
+        MainActivity.start(this, MainActivity.FILTER_BY_ADDITIONAL_CHARGE);
     }
 }
