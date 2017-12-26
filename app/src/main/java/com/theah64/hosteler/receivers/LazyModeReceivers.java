@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
@@ -29,6 +30,15 @@ public class LazyModeReceivers extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        assert pm != null;
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+                        | PowerManager.ON_AFTER_RELEASE,
+                "wakeup");
+
+        wl.acquire(10 * 60 * 1000L /*10 minutes*/);
+
 
         final Calendar today = Calendar.getInstance();
         final String type = intent.getStringExtra(KEY_LAZY_MODE_TYPE);
@@ -100,5 +110,7 @@ public class LazyModeReceivers extends BroadcastReceiver {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         assert nm != null;
         nm.notify(123, notification);
+
+        wl.release();
     }
 }
