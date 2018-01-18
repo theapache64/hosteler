@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2},"path":"app-release.apk","properties":{"packageId":"com.theah64.hosteler","split":"","minSdkVersion":"16"}}]
+=======
+[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":11},"path":"app-release.apk","properties":{"packageId":"com.theah64.hosteler","split":"","minSdkVersion":"16"}}]
+>>>>>>> 761c386c8c416ea7a27b7979ff8a65920d3bc68f
